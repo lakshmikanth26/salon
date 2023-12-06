@@ -1,0 +1,159 @@
+[22-Sep-2018 20:20:06 Asia/Kolkata] PHP Fatal error:  Call to undefined method Staffs_model::getSupplierPurchases() in /home/dilipindoc/public_html/posdemo/sma/models/Staffs_model.php on line 60
+[22-Sep-2018 20:20:29 Asia/Kolkata] PHP Fatal error:  Call to undefined method Staffs_model::getSupplierPurchases() in /home/dilipindoc/public_html/posdemo/sma/models/Staffs_model.php on line 60
+[22-Sep-2018 20:20:34 Asia/Kolkata] PHP Fatal error:  Call to undefined method Staffs_model::getSupplierPurchases() in /home/dilipindoc/public_html/posdemo/sma/models/Staffs_model.php on line 60
+[23-Sep-2018 00:26:52 Asia/Kolkata] PHP Fatal error:  Class 'Pos_model' not found in /home/dilipindoc/public_html/posdemo/system/core/Loader.php on line 305
+[23-Sep-2018 13:08:52 Asia/Kolkata] PHP Fatal error:  Call to undefined method Staffs_model::getSupplierPurchases() in /home/dilipindoc/public_html/posdemo/sma/models/Staffs_model.php on line 60
+[23-Sep-2018 13:08:57 Asia/Kolkata] PHP Fatal error:  Call to undefined method Staffs_model::getSupplierPurchases() in /home/dilipindoc/public_html/posdemo/sma/models/Staffs_model.php on line 60
+[23-Sep-2018 13:09:02 Asia/Kolkata] PHP Fatal error:  Call to undefined method Staffs_model::getSupplierPurchases() in /home/dilipindoc/public_html/posdemo/sma/models/Staffs_model.php on line 60
+[23-Sep-2018 13:09:06 Asia/Kolkata] PHP Fatal error:  Call to a member function deleteStaff() on null in /home/dilipindoc/public_html/posdemo/sma/controllers/Staffs.php on line 260
+[23-Sep-2018 13:09:27 Asia/Kolkata] PHP Fatal error:  Call to undefined method Staffs_model::getSupplierPurchases() in /home/dilipindoc/public_html/posdemo/sma/models/Staffs_model.php on line 60
+[25-Sep-2018 20:28:55 Asia/Kolkata] PHP Fatal error:  Call to a member function deleteStaff() on null in /home/dilipindoc/public_html/posdemo/sma/controllers/Staffs.php on line 260
+[25-Sep-2018 20:29:01 Asia/Kolkata] PHP Fatal error:  Call to undefined method Staffs_model::getSupplierPurchases() in /home/dilipindoc/public_html/posdemo/sma/models/Staffs_model.php on line 60
+[25-Sep-2018 20:29:09 Asia/Kolkata] PHP Fatal error:  Call to undefined method Staffs_model::getSupplierPurchases() in /home/dilipindoc/public_html/posdemo/sma/models/Staffs_model.php on line 60
+[26-Sep-2018 12:02:49 Asia/Kolkata] PHP Fatal error:  Call to undefined method Pos::ajaxstaffs() in /home/dilipindoc/public_html/posdemo/sma/controllers/Pos.php on line 1181
+[30-Sep-2018 23:11:29 Asia/Kolkata] PHP Parse error:  syntax error, unexpected end of file in /home/dilipindoc/public_html/posdemo/themes/default/views/pos/view.php on line 258
+[01-Oct-2018 00:23:09 Asia/Kolkata] PHP Fatal error:  Call to undefined method Staffs_model::getSupplierPurchases() in /home/dilipindoc/public_html/posdemo/sma/models/Staffs_model.php on line 60
+[01-Oct-2018 00:23:15 Asia/Kolkata] PHP Fatal error:  Call to undefined method Staffs_model::getSupplierPurchases() in /home/dilipindoc/public_html/posdemo/sma/models/Staffs_model.php on line 60
+[01-Oct-2018 12:05:00 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Sales_model.php on line 25
+[01-Oct-2018 12:05:00 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Sales_model.php on line 25
+[01-Oct-2018 12:05:09 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Sales_model.php on line 25
+[01-Oct-2018 12:05:29 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Sales_model.php on line 25
+[01-Oct-2018 12:06:17 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Sales_model.php on line 25
+[01-Oct-2018 12:06:17 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Sales_model.php on line 25
+[01-Oct-2018 12:06:21 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Sales_model.php on line 25
+[01-Oct-2018 12:06:21 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Sales_model.php on line 25
+[01-Oct-2018 12:06:21 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Sales_model.php on line 25
+[01-Oct-2018 12:06:22 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Sales_model.php on line 25
+[01-Oct-2018 12:07:01 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Sales_model.php on line 25
+[01-Oct-2018 12:07:06 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Sales_model.php on line 25
+[05-Oct-2018 23:13:15 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Site.php on line 172
+[05-Oct-2018 23:13:17 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Site.php on line 172
+[05-Oct-2018 23:13:39 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/models/Site.php on line 172
+[06-Oct-2018 17:23:03 Asia/Kolkata] PHP Fatal error:  Class 'Pos_model' not found in /home/dilipindoc/public_html/posdemo/system/core/Loader.php on line 305
+[06-Oct-2018 17:23:06 Asia/Kolkata] PHP Fatal error:  Class 'Pos_model' not found in /home/dilipindoc/public_html/posdemo/system/core/Loader.php on line 305
+[06-Oct-2018 17:24:09 Asia/Kolkata] PHP Fatal error:  Class 'Pos_model' not found in /home/dilipindoc/public_html/posdemo/system/core/Loader.php on line 305
+[06-Oct-2018 17:24:09 Asia/Kolkata] PHP Fatal error:  Class 'Pos_model' not found in /home/dilipindoc/public_html/posdemo/system/core/Loader.php on line 305
+[06-Oct-2018 17:24:09 Asia/Kolkata] PHP Fatal error:  Class 'Pos_model' not found in /home/dilipindoc/public_html/posdemo/system/core/Loader.php on line 305
+[06-Oct-2018 17:25:08 Asia/Kolkata] PHP Fatal error:  Class 'Pos_model' not found in /home/dilipindoc/public_html/posdemo/system/core/Loader.php on line 305
+[06-Oct-2018 17:25:10 Asia/Kolkata] PHP Fatal error:  Class 'Pos_model' not found in /home/dilipindoc/public_html/posdemo/system/core/Loader.php on line 305
+[06-Oct-2018 17:25:11 Asia/Kolkata] PHP Fatal error:  Class 'Pos_model' not found in /home/dilipindoc/public_html/posdemo/system/core/Loader.php on line 305
+[06-Oct-2018 17:29:32 Asia/Kolkata] PHP Fatal error:  Cannot redeclare Pos_model::getStaffByID() in /home/dilipindoc/public_html/posdemo/sma/models/Pos_model.php on line 2443
+[06-Oct-2018 17:29:34 Asia/Kolkata] PHP Fatal error:  Cannot redeclare Pos_model::getStaffByID() in /home/dilipindoc/public_html/posdemo/sma/models/Pos_model.php on line 2443
+[06-Oct-2018 17:29:48 Asia/Kolkata] PHP Fatal error:  Cannot redeclare Pos_model::getStaffByID() in /home/dilipindoc/public_html/posdemo/sma/models/Pos_model.php on line 2443
+[07-Oct-2018 00:06:04 Asia/Kolkata] PHP Parse error:  syntax error, unexpected end of file in /home/dilipindoc/public_html/posdemo/sma/controllers/Pos.php on line 2335
+[10-Oct-2018 15:50:04 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 367
+[03-Nov-2018 14:13:18 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 367
+[06-Nov-2018 15:07:23 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 367
+[08-Nov-2018 10:33:04 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 367
+[08-Nov-2018 10:38:14 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 367
+[10-Nov-2018 09:34:14 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 367
+[10-Nov-2018 09:36:08 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 367
+[13-Nov-2018 12:16:01 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 367
+[16-Nov-2018 11:45:13 Asia/Kolkata] PHP Fatal error:  Call to undefined method Datatables::order_by() in /home/dilipindoc/public_html/posdemo/sma/controllers/Reports.php on line 2932
+[16-Nov-2018 11:45:22 Asia/Kolkata] PHP Fatal error:  Call to undefined method Datatables::order_by() in /home/dilipindoc/public_html/posdemo/sma/controllers/Reports.php on line 2932
+[17-Nov-2018 16:44:01 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 367
+[17-Nov-2018 20:56:46 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 326
+[17-Nov-2018 20:57:01 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 326
+[17-Nov-2018 20:57:01 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 326
+[17-Nov-2018 20:57:01 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 326
+[17-Nov-2018 20:57:31 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 326
+[17-Nov-2018 20:57:31 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 326
+[22-Nov-2018 12:28:27 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 367
+[22-Nov-2018 12:28:27 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 367
+[02-Dec-2018 15:58:18 Asia/Kolkata] PHP Fatal error:  Call to a member function row() on boolean in /home/dilipindoc/public_html/posdemo/system/libraries/Session/drivers/Session_database_driver.php on line 367
+[20-Dec-2018 11:05:36 Asia/Kolkata] PHP Parse error:  syntax error, unexpected end of file, expecting ')' in /home/dilipindoc/public_html/posdemo/themes/default/views/pos/add.php on line 231
+[20-Dec-2018 11:05:39 Asia/Kolkata] PHP Parse error:  syntax error, unexpected end of file, expecting ')' in /home/dilipindoc/public_html/posdemo/themes/default/views/pos/add.php on line 231
+[20-Dec-2018 11:35:34 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 438
+[20-Dec-2018 11:35:45 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 438
+[20-Dec-2018 11:35:50 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 438
+[20-Dec-2018 11:36:00 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 438
+[20-Dec-2018 11:36:46 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 438
+[20-Dec-2018 11:38:47 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 438
+[20-Dec-2018 11:39:05 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 438
+[20-Dec-2018 11:39:21 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 438
+[20-Dec-2018 11:39:23 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 438
+[20-Dec-2018 11:40:45 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:40:48 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:40:48 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:40:48 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:40:48 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:40:49 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:40:49 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:40:49 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:40:49 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:40:50 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:41:03 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:41:18 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:41:31 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:41:40 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:43:15 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:43:17 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:43:17 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:43:17 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:43:17 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:43:17 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:43:18 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:43:18 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:43:18 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[20-Dec-2018 11:44:20 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on boolean in /home/dilipindoc/public_html/posdemo/sma/libraries/Datatables.php on line 437
+[24-Jan-2019 18:33:32 Asia/Kolkata] PHP Fatal error:  Call to undefined method Appointment::page_construct() in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Appointment.php on line 27
+[24-Jan-2019 18:34:00 Asia/Kolkata] PHP Fatal error:  Call to undefined method Appointment::page_construct() in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Appointment.php on line 22
+[25-Jan-2019 23:09:24 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '}' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Appointment.php on line 23
+[25-Jan-2019 23:09:29 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '}' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Appointment.php on line 23
+[25-Jan-2019 23:09:36 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '}' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Appointment.php on line 23
+[25-Jan-2019 23:09:39 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '}' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Appointment.php on line 23
+[25-Jan-2019 23:54:52 Asia/Kolkata] PHP Parse error:  syntax error, unexpected end of file in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/models/Site.php on line 191
+[06-Feb-2019 11:45:42 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '=>' (T_DOUBLE_ARROW) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/models/Site.php on line 937
+[06-Feb-2019 15:22:32 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '}' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Staffs.php on line 383
+[06-Feb-2019 17:10:33 Asia/Kolkata] PHP Fatal error:  Call to a member function get_appointments() on null in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Staffs.php on line 65
+[07-Feb-2019 16:48:36 Asia/Kolkata] PHP Fatal error:  Cannot use object of type stdClass as array in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Appointment.php on line 66
+[07-Feb-2019 16:48:39 Asia/Kolkata] PHP Fatal error:  Cannot use object of type stdClass as array in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Appointment.php on line 66
+[07-Feb-2019 18:48:00 Asia/Kolkata] PHP Fatal error:  Call to undefined method Site::get_customer_details() in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Appointment.php on line 146
+[08-Feb-2019 16:25:47 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''' (T_ENCAPSED_AND_WHITESPACE) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/themes/default/views/pos/add.php on line 230
+[08-Feb-2019 17:33:28 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ',' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Customers.php on line 334
+[08-Feb-2019 17:33:31 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ',' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Customers.php on line 334
+[10-Feb-2019 00:23:20 Asia/Kolkata] PHP Parse error:  syntax error, unexpected end of file in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Pos.php on line 429
+[11-Feb-2019 12:26:47 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''group'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Pos.php on line 1702
+[11-Feb-2019 12:26:47 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''group'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Pos.php on line 1702
+[11-Feb-2019 12:26:52 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''group'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Pos.php on line 1702
+[11-Feb-2019 12:27:34 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''group'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Pos.php on line 1702
+[11-Feb-2019 12:27:34 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''group'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Pos.php on line 1702
+[11-Feb-2019 12:27:35 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''group'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Pos.php on line 1702
+[11-Feb-2019 12:27:35 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''group'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Pos.php on line 1702
+[11-Feb-2019 12:27:35 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''group'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Pos.php on line 1702
+[11-Feb-2019 12:27:37 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''group'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Pos.php on line 1702
+[11-Feb-2019 12:27:37 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''group'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Pos.php on line 1702
+[11-Feb-2019 12:27:37 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''group'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Pos.php on line 1702
+[14-Feb-2019 11:33:48 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on null in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/models/Site.php on line 933
+[15-Feb-2019 15:14:47 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Appointment.php on line 392
+[15-Feb-2019 15:14:54 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Appointment.php on line 392
+[15-Feb-2019 15:15:05 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/v2/sma/controllers/Appointment.php on line 392
+[25-Feb-2019 17:03:37 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Reports.php on line 4235
+[25-Feb-2019 17:03:38 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Reports.php on line 4235
+[25-Feb-2019 18:35:48 Asia/Kolkata] PHP Parse error:  syntax error, unexpected '242' (T_LNUMBER) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Reports.php on line 4227
+[25-Feb-2019 18:45:23 Asia/Kolkata] PHP Parse error:  syntax error, unexpected 'sum' (T_STRING) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Reports.php on line 4328
+[25-Feb-2019 18:45:24 Asia/Kolkata] PHP Parse error:  syntax error, unexpected 'sum' (T_STRING) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Reports.php on line 4328
+[25-Feb-2019 18:47:03 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''" group by staff_id) i'' (T_CONSTANT_ENCAPSED_STRING) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Reports.php on line 4326
+[25-Feb-2019 18:47:04 Asia/Kolkata] PHP Parse error:  syntax error, unexpected ''" group by staff_id) i'' (T_CONSTANT_ENCAPSED_STRING) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Reports.php on line 4326
+[13-Oct-2019 08:23:20 Asia/Kolkata] PHP Fatal error:  Call to undefined function mysqli_init() in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[13-Oct-2019 08:23:23 Asia/Kolkata] PHP Fatal error:  Call to undefined function mysqli_init() in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[13-Oct-2019 08:23:40 Asia/Kolkata] PHP Fatal error:  Call to undefined function mysqli_init() in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[13-Oct-2019 08:23:43 Asia/Kolkata] PHP Fatal error:  Call to undefined function mysqli_init() in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/system/database/drivers/mysqli/mysqli_driver.php on line 126
+[17-Oct-2019 11:40:38 Asia/Kolkata] PHP Parse error:  syntax error, unexpected end of file in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Reports.php on line 828
+[17-Oct-2019 11:43:03 Asia/Kolkata] PHP Fatal error:  Call to a member function num_rows() on null in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Reports.php on line 3206
+[17-Oct-2019 11:43:26 Asia/Kolkata] PHP Parse error:  syntax error, unexpected end of file in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Reports.php on line 1909
+[17-Oct-2019 12:03:13 Asia/Kolkata] PHP Parse error:  syntax error, unexpected end of file in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/controllers/Reports.php on line 306
+[17-Oct-2019 16:01:27 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 75 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24156
+[17-Oct-2019 16:02:12 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 32 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24171
+[17-Oct-2019 16:02:45 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 32 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24171
+[17-Oct-2019 16:03:20 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 79 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24132
+[17-Oct-2019 16:03:58 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 79 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24132
+[17-Oct-2019 16:05:01 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 79 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24132
+[17-Oct-2019 16:06:33 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 64 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24180
+[17-Oct-2019 16:07:34 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 75 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24156
+[17-Oct-2019 16:08:12 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 76 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24132
+[17-Oct-2019 16:08:54 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 76 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24132
+[17-Oct-2019 16:10:00 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 76 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24132
+[17-Oct-2019 16:11:13 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 72 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24155
+[17-Oct-2019 16:11:49 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 72 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24155
+[17-Oct-2019 16:12:30 Asia/Kolkata] PHP Fatal error:  Allowed memory size of 536870912 bytes exhausted (tried to allocate 75 bytes) in /home/fzgpqfc7r60a/public_html/theinfinityunisexsalon/sma/third_party/MPDF/mpdf.php on line 24156
