@@ -146,7 +146,15 @@ if (!empty($variants)) {
                         <input id="product_image" type="file" name="product_image" data-show-upload="false"
                                data-show-preview="false" accept="image/*" class="form-control file">
                     </div>
+                    
+                    <div class="form-group" id="membership">
+                        <label class="control-label"
+                            for="membership"><?php echo $this->lang->line("Membership Plan"); ?></label>
 
+                        <div class="controls"> 
+                            <?php echo form_dropdown('membership', $memberShipPlans, '', 'class="form-control tip select" id="membership" style="width:100%;"'); ?>
+                        </div>
+                    </div>
                     
 
                 </div>
@@ -461,6 +469,7 @@ if (!empty($variants)) {
         var audio_success = new Audio('<?= $assets ?>sounds/sound2.mp3');
         var audio_error = new Audio('<?= $assets ?>sounds/sound3.mp3');
         var items = {};
+        $('#membership').hide();
         <?php
         if($combo_items) {
             foreach($combo_items as $item) {
@@ -507,6 +516,11 @@ if (!empty($variants)) {
                 $('.digital').slideDown();
                 $('#digital_file').attr('required', 'required');
                 $('form[data-toggle="validator"]').bootstrapValidator('addField', 'digital_file');
+            }
+            if(t == 'membership') {
+                $('#membership').show();
+            } else {
+                $('#membership').hide();
             }
             if (t !== 'combo') {
                 $('.combo').slideUp();

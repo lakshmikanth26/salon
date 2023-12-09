@@ -2116,7 +2116,7 @@ function discount_suggestions()
         $this->data['modal'] = $modal;
 
         $this->data['page_title'] = $this->lang->line("invoice");
-
+        
         if($modal == NULL){
             $this->load->view($this->theme . 'pos/view_print', $this->data);
   
@@ -2128,6 +2128,7 @@ function discount_suggestions()
         $customerGroupName = strtolower($this->data['customer_group']->name);
         if ($customerGroupName == 'non member') {
             $this->pos_model->updateCustomerGroupToMember($this->data['customer']->id);
+            $this->pos_model->updateCustomerMembershipPlan($this->data['rows'],$this->data['customer']->id);
         }
         
         

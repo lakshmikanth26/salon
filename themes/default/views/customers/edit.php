@@ -18,7 +18,7 @@
                     foreach ($customer_groups as $customer_group) {
                         $cgs[$customer_group->id] = $customer_group->name;
                     }
-                    echo form_dropdown('customer_group', $cgs, $customer->customer_group_id, 'class="form-control tip select" id="customer_group" style="width:100%;" required="required"');
+                    echo form_dropdown('customer_group', $cgs, $customer->customer_group_id, 'class="form-control tip select" id="customer_group" style="width:100%;" required="required" disabled="disabled"');
                     ?>
                 </div>
             </div>
@@ -28,11 +28,17 @@
                         <?= lang("company", "company"); ?>
                         <?php echo form_input('company', $customer->company, 'class="form-control tip" id="company" '); ?>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label"
-                            for="customer_group"><?php echo $this->lang->line("Prefix"); ?></label>
-                        <div class="controls"> 
-                            <?php echo form_dropdown('prefix', $prefix, $customer->prefix, 'class="form-control tip select" id="prefix" style="width:100%;"'); ?>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label class="control-label"
+                                for="customer_group"><?php echo $this->lang->line("Prefix"); ?></label>
+                            <div class="controls"> 
+                                <?php echo form_dropdown('prefix', $prefix, $customer->prefix, 'class="form-control tip select" id="prefix" style="width:100%;"'); ?>
+                            </div>
+                        </div>
+                        <div class="form-group person col-md-9">
+                            <?= lang("name", "name"); ?>
+                            <?php echo form_input('name', $customer->name, 'class="form-control tip" id="name" data-bv-notempty="true"'); ?>
                         </div>
                     </div>
                     <div class="form-group">
@@ -45,21 +51,21 @@
                     </div>
                     <div class="form-group">
                         <?= lang("dob", "dob"); ?>
-                        <?php echo form_input('dob', $customer->dob, 'class="form-control datetime" id="dob" data-bv-notempty="true"'); ?>
+                        <?php echo form_input('dob', $customer->dob, 'class="form-control datetime" id="dob" '); ?>
                     </div>
                     <div class="form-group">
-                        <?= lang("Whatsapp", "Whatsapp"); ?>
-                        <?php echo form_input('whatsapp', $customer->whatsapp, 'class="form-control" id="whatsapp" data-bv-notempty="true"'); ?>
+                        <?= lang("phone", "phone"); ?>
+                        <input type="tel" name="phone" class="form-control" required="required" id="phone"
+                            value="<?= $customer->phone ?>"/>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <?= lang("ccf1", "cf1"); ?>
                         <?php echo form_input('cf1', $customer->cf1, 'class="form-control datetime" id="cf1"'); ?>
                     </div>
                     <div class="form-group">
                         <?= lang("ccf2", "cf2"); ?>
                         <?php echo form_input('cf2', $customer->cf2, 'class="form-control datetime" id="cf2"'); ?>
-
-                    </div>
+                    </div> -->
                     <div class="form-group" style="display: none;">
                         <?= lang("vat_no", "vat_no"); ?>
                         <?php echo form_input('vat_no', $customer->vat_no, 'class="form-control" id="vat_no"'); ?>
@@ -74,39 +80,34 @@
                     <div class="form-group">
                         <?= lang("Communication Prefer","Communication Prefer"); ?>
                         <div>
-                        <input class="form-check-input" value="sms"
-                            type="radio" name="communication" id="flexRadioDefault"
-                            <?php echo ($customer->communication == 'sms') ? 'checked' : ''; ?>>
-                        <label class="form-check-label" for="flexRadioDefault">
-                            Sms
-                        </label>
-                        <input class="form-check-input" value="email" 
-                            type="radio" name="communication" id="flexRadioDefault1"
-                            <?php echo ($customer->communication == 'email') ? 'checked' : ''; ?>>
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Email
-                        </label>
-                        <input class="form-check-input" value="whatsapp"  
-                            type="radio" name="communication" id="flexRadioDefault2"
-                            <?php echo ($customer->communication == 'whatsapp') ? 'checked' : ''; ?>>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Whatsapp
-                        </label>
+                        <div class="row">
+                            <div class="form-check col-md-3">
+                                <label>
+                                    <?php echo form_checkbox('communication[]', 'sms', (strpos($customer->communication, 'sms') !== false) ? TRUE : FALSE); ?> SMS
+                                </label>
+                            </div>
+                            <div class="form-check col-md-3">
+                                <label>
+                                    <?php echo form_checkbox('communication[]', 'email', (strpos($customer->communication, 'email') !== false) ? TRUE : FALSE, "class='email-checkbox'"); ?> E-Mail
+                                </label>
+                            </div>
+                            <div class="form-check col-md-4">
+                                <label>
+                                    <?php echo form_checkbox('communication[]', 'Whatsapp',(strpos($customer->communication, 'whatsapp') !== false) ? TRUE : FALSE, "class='whatsapp-checkbox'"); ?> Whatsapp
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group person">
-                        <?= lang("name", "name"); ?>
-                        <?php echo form_input('name', $customer->name, 'class="form-control tip" id="name" required="required"'); ?>
+                        </div>
                     </div>
                     <div class="form-group">
                         <?= lang("anniversary", "anniversary"); ?>
-                        <?php echo form_input('anniversary', $customer->anniversary, 'class="form-control datetime" id="anniversary" data-bv-notempty="true"'); ?>
+                        <?php echo form_input('anniversary', $customer->anniversary, 'class="form-control datetime" id="anniversary"'); ?>
                     </div>
                     <div class="form-group">
-                        <?= lang("phone", "phone"); ?>
-                        <input type="tel" name="phone" class="form-control" required="required" id="phone"
-                            value="<?= $customer->phone ?>"/>
+                        <?= lang("Whatsapp", "Whatsapp"); ?>
+                        <?php echo form_input('whatsapp', $customer->whatsapp, 'class="form-control" id="whatsapp""'); ?>
                     </div>
+                    
                     <div class="form-group">
                         <?= lang("email_address", "email_address"); ?>
                         <input type="email" name="email" class="form-control" id="email_address"

@@ -170,7 +170,7 @@ class Products_model extends CI_Model
                 }
             }
 
-            if ($data['type'] == 'combo' || $data['type'] == 'service') {
+            if ($data['type'] == 'combo' || $data['type'] == 'service' || $data['type'] == 'membership') {
                 $warehouses = $this->site->getAllWarehouses();
                 foreach ($warehouses as $warehouse) {
                     $this->db->insert('warehouses_products', array('product_id' => $product_id, 'warehouse_id' => $warehouse->id, 'quantity' => 0));

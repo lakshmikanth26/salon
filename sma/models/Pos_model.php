@@ -872,6 +872,39 @@ class Pos_model extends CI_Model
         $this->db->update('companies', $data);
     }
 
+    public function getMembershipData($product_id) {
+        $this->db->select('membership');
+        $this->db->from('products');
+        $this->db->where('id', $product_id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    
+    public function updateMembershipDates($customer_id, $start_date, $end_date) {
+        $data = array(
+            'cf1' => $start_date,
+            'cf2' => $end_date
+        );
+        $this->db->where('id', $customer_id);
+        $this->db->update('companies', $data);
+    }
+
+    public function updateCustomerMembershipPlan($products, $customer_id) {
+        $max_membership = 1;
+        foreach ($products as $product) {
+            $product_id = $product->product_id;
+            $membership_data = $this->getMembershipData($product_id);
+            if (!empty($membership_data)) {
+                $max_membership = max($max_membership, $membership_data[0]->membership);
+            }
+        }
+        if ($max_membership) {
+            $start_date = date('Y-m-d'); // Today's date
+            $end_date = date('Y-m-d', strtotime("+{$max_membership} years"));
+            $this->updateMembershipDates($customer_id, $start_date, $end_date);
+        }
+    }
+
     public function getDiscountByID($id)
 
     {
@@ -1201,7 +1234,6 @@ class Pos_model extends CI_Model
         $q = $this->db->get_where('sale_items', array('sale_id' => $sale_id));
 
         if ($q->num_rows() > 0) {
-
             foreach (($q->result()) as $row) {
 
                 $data[] = $row;

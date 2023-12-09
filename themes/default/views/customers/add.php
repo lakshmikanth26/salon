@@ -18,7 +18,7 @@
                     foreach ($customer_groups as $customer_group) {
                         $cgs[$customer_group->id] = $customer_group->name;
                     }
-                    echo form_dropdown('customer_group', $cgs, $this->Settings->customer_group, 'class="form-control tip select" id="customer_group" style="width:100%;" required="required"');
+                    echo form_dropdown('customer_group', $cgs, $this->Settings->customer_group, 'class="form-control tip select" id="customer_group" style="width:100%;" required="required" disabled="disabled"');
                     ?>
                 </div>
             </div>
@@ -29,11 +29,17 @@
                         <?= lang("company", "company"); ?>
                         <?php echo form_input('company', '', 'class="form-control tip" id="company"'); ?>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label"
-                            for="customer_group"><?php echo $this->lang->line("Prefix"); ?></label>
-                        <div class="controls"> 
-                            <?php echo form_dropdown('prefix', $prefix, '', 'class="form-control tip select" id="prefix" style="width:100%;"'); ?>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label class="control-label"
+                                for="customer_group"><?php echo $this->lang->line("Prefix"); ?></label>
+                            <div class="controls"> 
+                                <?php echo form_dropdown('prefix', $prefix, '', 'class="form-control tip select" id="prefix" style="width:100%;"'); ?>
+                            </div>
+                        </div>
+                        <div class="form-group person col-md-9">
+                            <?= lang("name", "name"); ?>
+                            <?php echo form_input('name', '', 'class="form-control tip" id="name" data-bv-notempty="true"'); ?>
                         </div>
                     </div>
                     <div class="form-group">
@@ -49,59 +55,56 @@
                         <?php echo form_input('vat_no', '', 'class="form-control" id="vat_no"'); ?>
                     </div>
                     <!--<div class="form-group company">
-                    <?= lang("contact_person", "contact_person"); ?>
+                    <?= lang("contact_person", 
+                    "contact_person"); ?>
                     <?php echo form_input('contact_person', '', 'class="form-control" id="contact_person" data-bv-notempty="true"'); ?>
                     </div>-->
                     <div class="form-group">
                         <?= lang("dob", "dob"); ?>
-                        <?php echo form_input('dob', '', 'class="form-control datetime" id="dob" data-bv-notempty="true"'); ?>
+                        <?php echo form_input('dob', '', 'class="form-control datetime" id="dob"'); ?>
                     </div>
                     <div class="form-group">
-                        <?= lang("Whatsapp", "Whatsapp"); ?>
-                        <input type="tel" name="whatsapp" class="form-control" required="required" id="Whatsapp"/>
+                        <?= lang("phone", "phone"); ?>
+                        <input type="tel" name="phone" class="form-control" required="required" id="phone"/>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <?= lang("ccf1", "cf1"); ?>
                         <?php echo form_input('cf1', '', 'class="form-control datetime" id="cf1"'); ?>
                     </div>
                     <div class="form-group">
                         <?= lang("ccf2", "cf2"); ?>
                         <?php echo form_input('cf2', '', 'class="form-control datetime" id="cf2"'); ?>
-                    </div>
+                    </div> -->
                     
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <?= lang("Communication Prefer","Communication Prefer"); ?>
-                        <div>
-                        <input class="form-check-input" value="sms"
-                            type="radio" name="communication" id="flexRadioDefault" checked>
-                        <label class="form-check-label" for="flexRadioDefault">
-                            Sms
-                        </label>
-                        <input class="form-check-input" value="email" 
-                            type="radio" name="communication" id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Email
-                        </label>
-                        <input class="form-check-input" value="whatsapp"
-                            type="radio" name="communication" id="flexRadioDefault2">
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Whatsapp
-                        </label>
+                        <div class="row">
+                            <div class="form-check col-md-3">
+                                <label>
+                                    <?php echo form_checkbox('communication[]', 'sms', TRUE); ?> SMS
+                                </label>
+                            </div>
+                            <div class="form-check col-md-3">
+                                <label>
+                                    <?php echo form_checkbox('communication[]', 'email', FALSE, "class='email-checkbox'"); ?> E-Mail
+                                </label>
+                            </div>
+                            <div class="form-check col-md-4">
+                                <label>
+                                    <?php echo form_checkbox('communication[]', 'Whatsapp',FALSE, "class='whatsapp-checkbox'"); ?> Whatsapp
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group person">
-                        <?= lang("name", "name"); ?>
-                        <?php echo form_input('name', '', 'class="form-control tip" id="name" data-bv-notempty="true"'); ?>
                     </div>
                     <div class="form-group">
                         <?= lang("anniversary", "anniversary"); ?>
-                        <?php echo form_input('anniversary', '', 'class="form-control datetime" id="anniversary" data-bv-notempty="true"'); ?>
+                        <?php echo form_input('anniversary', '', 'class="form-control datetime" id="anniversary"'); ?>
                     </div>
-                    <div class="form-group">
-                        <?= lang("phone", "phone"); ?>
-                        <input type="tel" name="phone" class="form-control" required="required" id="phone"/>
+                    <div class="form-group" id="whatsapp">
+                        <?= lang("Whatsapp", "Whatsapp"); ?>
+                        <input type="text" name="whatsapp" class="form-control" id="whatsapp-input"/>
                     </div>
                     <div class="form-group" style="display: none;">
                         <?= lang("address", "address"); ?>
@@ -123,9 +126,9 @@
                         <?= lang("country", "country"); ?>
                         <?php echo form_input('country', 'INDIA', 'class="form-control" id="country"'); ?>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="email">
                         <?= lang("email_address", "email_address"); ?>
-                        <input type="email" name="email" class="form-control" id="email_address" required="required"/>
+                        <input type="email" name="email" class="form-control" id="email_address"/>
                     </div>
                     <!--<div class="form-group">
                         <?= lang("ccf3", "cf3"); ?>
@@ -159,6 +162,20 @@
 
 <script type="text/javascript">
     $(document).ready(function (e) {
+        $('.whatsapp-checkbox').change(function () {
+                if ($(this).prop('checked')) {
+                    $('#whatsapp-input').attr('required', 'required');
+                } else {
+                    $('#whatsapp-input').removeAttr('required');
+                }
+        });
+        $('.email-checkbox').change(function () {
+            if ($(this).prop('checked')) {
+                $('#email_address').attr('required', 'required');
+            } else {
+                $('#email_address').removeAttr('required');
+            }
+        });
         $('.datetime').datetimepicker({
             autoclose:true,
             viewMode: 'days',

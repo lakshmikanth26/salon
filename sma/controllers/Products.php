@@ -20,6 +20,11 @@ class Products extends MY_Controller
         $this->digital_file_types = 'zip|psd|ai|rar|pdf|doc|docx|xls|xlsx|ppt|pptx|gif|jpg|jpeg|png|tif|txt';
         $this->allowed_file_size = '1024';
         $this->popup_attributes = array('width' => '900', 'height' => '600', 'window_name' => 'sma_popup', 'menubar' => 'yes', 'scrollbars' => 'yes', 'status' => 'no', 'resizable' => 'yes', 'screenx' => '0', 'screeny' => '0');
+        $this->data['memberShipPlans'] = array(
+            '1'   => '1 Year',
+            '2' => '2 Year',
+            '3'  => '3 Year',
+        );
     }
 
     function index($warehouse_id = NULL)
@@ -38,7 +43,6 @@ class Products extends MY_Controller
             $this->data['warehouse_id'] = $this->session->userdata('warehouse_id');
             $this->data['warehouse'] = $this->session->userdata('warehouse_id') ? $this->site->getWarehouseByID($this->session->userdata('warehouse_id')) : NULL;
         }
-
         $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => '#', 'page' => lang('products')));
         $meta = array('page_title' => lang('products'), 'bc' => $bc);
         $this->page_construct('products/index', $meta, $this->data);
@@ -589,6 +593,7 @@ class Products extends MY_Controller
                 'cf4' => $this->input->post('cf4'),
                 'cf5' => $this->input->post('cf5'),
                 'cf6' => $this->input->post('cf6'),
+                'membership' => $this->input->post('membership')
             );
             $this->load->library('upload');
             if ($this->input->post('type') == 'standard') {
@@ -637,7 +642,7 @@ class Products extends MY_Controller
                 $product_attributes = NULL;
             }
 
-            if ($this->input->post('type') == 'service') {
+            if ($this->input->post('type') == 'service' || $this->input->post('type') == 'membership') {
                 $data['track_quantity'] = 0;
             } elseif ($this->input->post('type') == 'combo') {
                 $total_price = 0;
@@ -683,7 +688,6 @@ class Products extends MY_Controller
                 $items = NULL;
             }
             if ($_FILES['product_image']['size'] > 0) {
-
                 $config['upload_path'] = $this->upload_path;
                 $config['allowed_types'] = $this->image_types;
                 $config['max_size'] = $this->allowed_file_size;
@@ -805,7 +809,6 @@ class Products extends MY_Controller
             $data['quantity'] = isset($wh_total_quantity) ? $wh_total_quantity : 0;
             // $this->sma->print_arrays($data, $warehouse_qty, $product_attributes);
         }
-
         if ($this->form_validation->run() == true && $this->products_model->addProduct($data, $items, $warehouse_qty, $product_attributes, $photos)) {
             $this->session->set_flashdata('message', lang("product_added"));
             if($this->input->post('type') == 'service'){

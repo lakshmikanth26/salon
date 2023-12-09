@@ -105,7 +105,7 @@ class Services extends MY_Controller
                 ->join('subcategories', 'subcategories.id=products.subcategory_id', 'left')
                 ->join('tax_rates', 'tax_rates.id=products.tax_rate', 'left')
                 ->where('warehouses_products.warehouse_id', $warehouse_id)
-                ->where('products.type', 'service')
+                ->where('(products.type = "service" OR products.type = "membership")')
                 //->where('warehouses_products.quantity !=', 0)
                 ->group_by("warehouses_products.product_id");
                 if ($category) {
@@ -124,8 +124,7 @@ class Services extends MY_Controller
                 ->join('categories', 'products.category_id=categories.id', 'left')
                 ->join('subcategories', 'subcategories.id=products.subcategory_id', 'left')
                 ->join('tax_rates', 'tax_rates.id=products.tax_rate', 'left')
-                ->where('products.type', 'service')
-                ->group_by("products.id");
+                ->where('(products.type = "service" OR products.type = "membership")');
                 if ($category) {
                 $this->datatables->where($this->db->dbprefix('products') . ".category_id", $category);
                 }

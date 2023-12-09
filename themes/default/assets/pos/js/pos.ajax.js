@@ -482,8 +482,8 @@ if (poswarehouse = localStorage.getItem('poswarehouse')) {
                     url: site.base_url+'customers/getCustomer/' + $(this).val(),
                     dataType: "json",
                     success: function (data) {
-						localStorage.setItem('customerId',data[0].id);
-                        $("#item-list1").html("<div><p>Name : "+data[0].prefix + data[0].text+"</p><p>DOB : "+data[0].dob+"</p><p>Anniversary : "+data[0].anniversary+"</p><p>Phone : "+data[0].phone+"</p><p>Customer : "+data[0].customer_group_name+"</p><p>Email : "+data[0].email+"</p><p>Gender : "+data[0].gender+"</p><p>Whatsapp : "+data[0].whatsapp+"</p><br><a class='btn btn-success' style='width:100%' href='"+site.base_url+"customers/edit/"+data[0].id+"' data-toggle='modal' data-target='#myModal'>Convert</a><div class='item-list-sales'></div><div class='item-customer-list-sales'></div><div class='item-list-coupons'></div></div>");
+						var customerGroupName = $("<div>").html(data[0].customer_group_name).text();
+                        $("#item-list1").html("<div><p>Name : "+data[0].prefix + data[0].text+"</p><p>DOB : "+data[0].dob+"</p><p>Anniversary : "+data[0].anniversary+"</p><p>Phone : "+data[0].phone+"</p><p>Customer : "+data[0].customer_group_name+"</p><p>Email : "+data[0].email+"</p><p>Gender : "+data[0].gender+"</p><p>Whatsapp : "+data[0].whatsapp+"</p>"+(customerGroupName.toLowerCase() == "member" ? "<p>Start Date: " + data[0].cf1 + "</p>" : "") + (customerGroupName.toLowerCase() == "member" ? "<p>End Date: " + data[0].cf2 + "</p>" : "") + "<br><a class='btn btn-success' style='width:100%' href='"+site.base_url+"customers/edit/"+data[0].id+"<br><a class='btn btn-success' style='width:100%' href='"+site.base_url+"customers/edit/"+data[0].id+"' data-toggle='modal' data-target='#myModal'>Edit</a><div class='item-list-sales'></div><div class='item-customer-list-sales'></div><div class='item-list-coupons'></div></div>");
                         if(data[0].sales != false){
                             var sales = data[0].sales;
                             var sale_count = sales.length;

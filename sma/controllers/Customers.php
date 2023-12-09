@@ -81,6 +81,7 @@ class Customers extends MY_Controller
 
         if ($this->form_validation->run('companies/add') == true) {
             $cg = $this->site->getCustomerGroupByID($this->input->post('customer_group'));
+            $communicationString = implode(',', $this->input->post('communication'));
             $data = array('name' => $this->input->post('name'),
                 'email' => $this->input->post('email'),
                 'group_id' => '3',
@@ -104,7 +105,7 @@ class Customers extends MY_Controller
                 'prefix' => $this->input->post('prefix'),
                 'gender' => $this->input->post('gender'),
                 'dob' => $this->input->post('dob'),
-                'communication' => $this->input->post('communication'),
+                'communication' => $communicationString,
                 'whatsapp' => $this->input->post('whatsapp'),
                 'anniversary' => $this->input->post('anniversary'),
             );
@@ -372,10 +373,10 @@ class Customers extends MY_Controller
         $this->sma->checkPermissions('index');
         $row = $this->companies_model->getCompanyByID($id);
 
-        if($row->customer_group_id == '5'){ 
-           $c_g =  "<span class='btn btn-danger'>Member</span>";
+        if($row->customer_group_id == '5'){
+            $c_g =  "<span class='btn btn-danger'>Member</span>";
         }else{
-           $c_g =  "Non Member";
+            $c_g =  "Non Member";
         }
         $salesrow = $this->companies_model->getSales($id);
 
@@ -385,16 +386,24 @@ class Customers extends MY_Controller
 
         $appointmentrow = $this->companies_model->getAppointments($id);
 
-        echo json_encode(array(array('id' => $row->id, 'text' => $row->name, 'phone' => $row->phone, 
-        'customer_group_name' => $c_g, 'sales' => $salesrow,
-        'coupons' => $couponrow, 'wallets' => $walletrow,
+        echo json_encode(array(array(
+        'id' => $row->id,
+        'text' => $row->name,
+        'phone' => $row->phone,
+        'customer_group_name' => $c_g,
+        'sales' => $salesrow,
+        'coupons' => $couponrow,
+        'wallets' => $walletrow,
         'appointments' => $appointmentrow,
         'email' => $row->email,
         'whatsapp' => $row->whatsapp,
         'gender' => $row->gender,
         'prefix' => $row->prefix,
         'anniversary' => $row->anniversary,
-        'dob' => $row->dob)));
+        'dob' => $row->dob,
+        'cf1' => $row->cf1,
+        'cf2' => $row->cf2
+        )));
     }
 
     function get_award_points($id = NULL)
