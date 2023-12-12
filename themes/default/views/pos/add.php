@@ -1308,14 +1308,15 @@ var lang = {unexpected_value: '<?=lang('unexpected_value');?>', select_above: '<
                     url: "<?= site_url('customers/getCustomer') ?>/" + $(element).val(),
                     dataType: "json",
                     success: function (data) {
-                        $("#item-list1").html("<div><p>Name : "+data[0].prefix + data[0].text+"</p><p>DOB : "+data[0].dob+"</p><p>Anniversary : "+data[0].anniversary+"</p><p>Phone : "+data[0].phone+"</p><p>Customer : "+data[0].customer_group_name+"</p><p>Email : "+data[0].email+"</p><p>Gender : "+data[0].gender+"</p><p>Whatsapp : "+data[0].whatsapp+"</p><br><a class='btn btn-success' style='width:100%' href='"+site.base_url+"customers/edit/"+data[0].id+"' data-toggle='modal' data-target='#myModal'>Convert</a><div class='item-list-sales'></div><div class='item-customer-list-sales'></div><div class='item-list-coupons'></div></div>");
+                        var customerGroupName = $("<div>").html(data[0].customer_group_name).text();
+                        $("#item-list1").html("<div><p>Name : "+data[0].prefix + data[0].text+"</p><p>DOB : "+data[0].dob+"</p><p>Anniversary : "+data[0].anniversary+"</p><p>Phone : "+data[0].phone+"</p><p>Customer : "+data[0].customer_group_name+"</p><p>Email : "+data[0].email+"</p><p>Gender : "+data[0].gender+"</p><p>Whatsapp : "+data[0].whatsapp+"</p>"+(customerGroupName.toLowerCase() == "member" ? "<p>Membership Start Date : " + data[0].cf1 + "</p>" : "") + (customerGroupName.toLowerCase() == "member" ? "<p>Membership End Date : " + data[0].cf2 + "</p>" : "") + "<br><a class='btn btn-success' style='width:100%' href='"+site.base_url+"customers/edit/"+data[0].id+"' data-toggle='modal' data-target='#myModal'>Edit</a><div class='item-list-sales row'></div><div class='item-customer-list-sales'></div><div class='item-list-coupons'></div></div>");
                         if(data[0].sales != false){
                             var sales = data[0].sales;
                             var sale_count = sales.length;
                             s = 0;
+                            $(".item-list-sales").append("<h2 class='text-center'>View Previous sales</h2>");
                             $.each(sales, function () {
-                                console.log(sales[s].id);
-                                $(".item-list-sales").append("<br><a class='btn btn-warning' target='_blank' style='width:100%' href='"+site.base_url+"pos/view/"+sales[s].id+"/1' data-toggle='modal' data-target='#myModal'>View Previous Sales "+s+"</a>");
+                                $(".item-list-sales").append("<div class='col-md-6' style='margin-bottom:2px'><a class='btn btn-warning' style='width:100%' target='_blank' href='"+site.base_url+"pos/view/"+sales[s].id+"/1' data-toggle='modal' data-target='#myModal'>Sales "+(s+1)+"</a></div>");
                                 s++;
                             });
                                 $(".item-customer-list-sales").append("<br><a class='btn btn-success' target='_blank' style='width:100%' href='"+site.base_url+"reports/customer_report/"+$(element).val()+"' >View More</a>");

@@ -74,14 +74,25 @@ class Customers extends MY_Controller
 
     function add()
     {
+        $communicationString = '';
         $this->sma->checkPermissions(false, true);
 
         $this->form_validation->set_rules('email', $this->lang->line("email_address"), 'is_unique[companies.email]');
         $this->form_validation->set_rules('phone', $this->lang->line("phone"), 'is_unique[companies.phone]');
+        if($this->input->post('communication')){
+            $communicationString = implode(',', $this->input->post('communication'));
+        }
+        
+        if (strpos($communicationString, 'Whatsapp')) {
+            $this->form_validation->set_rules('whatsapp', 'whatsapp', 'required|trim');
+        }
+
+        if (strpos($communicationString, 'email')) {
+            $this->form_validation->set_rules('email', 'email', 'required|trim');
+        }
 
         if ($this->form_validation->run('companies/add') == true) {
             $cg = $this->site->getCustomerGroupByID($this->input->post('customer_group'));
-            $communicationString = implode(',', $this->input->post('communication'));
             $data = array('name' => $this->input->post('name'),
                 'email' => $this->input->post('email'),
                 'group_id' => '3',

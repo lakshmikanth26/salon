@@ -488,9 +488,9 @@ if (poswarehouse = localStorage.getItem('poswarehouse')) {
                             var sales = data[0].sales;
                             var sale_count = sales.length;
                             s = 0;
+							$(".item-list-sales").append("<h2 class='text-center'>View Previous sales</h2>");
                             $.each(sales, function () {
-                                //console.log(sales[s].id);
-                                $(".item-list-sales").append("<br><a class='btn btn-warning' target='_blank' style='width:100%' href='"+site.base_url+"pos/view/"+sales[s].id+"/1' data-toggle='modal' data-target='#myModal'>View Previous Sales "+s+"</a>");
+                                $(".item-list-sales").append("<div class='col-md-6' style='margin-bottom:2px'><a class='btn btn-warning' style='width:100%' target='_blank' href='"+site.base_url+"pos/view/"+sales[s].id+"/1' data-toggle='modal' data-target='#myModal'>Sales "+(s+1)+"</a></div>");
                                 s++;
                             });
                             

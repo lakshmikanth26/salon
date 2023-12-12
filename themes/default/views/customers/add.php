@@ -104,7 +104,9 @@
                     </div>
                     <div class="form-group" id="whatsapp">
                         <?= lang("Whatsapp", "Whatsapp"); ?>
-                        <input type="text" name="whatsapp" class="form-control" id="whatsapp-input"/>
+                        <div id="whatsappField">
+                            <?php echo form_input('whatsapp', '', 'class="form-control tip" id="whatsapp" '); ?>
+                        </div>
                     </div>
                     <div class="form-group" style="display: none;">
                         <?= lang("address", "address"); ?>
@@ -162,20 +164,6 @@
 
 <script type="text/javascript">
     $(document).ready(function (e) {
-        $('.whatsapp-checkbox').change(function () {
-                if ($(this).prop('checked')) {
-                    $('#whatsapp-input').attr('required', 'required');
-                } else {
-                    $('#whatsapp-input').removeAttr('required');
-                }
-        });
-        $('.email-checkbox').change(function () {
-            if ($(this).prop('checked')) {
-                $('#email_address').attr('required', 'required');
-            } else {
-                $('#email_address').removeAttr('required');
-            }
-        });
         $('.datetime').datetimepicker({
             autoclose:true,
             viewMode: 'days',

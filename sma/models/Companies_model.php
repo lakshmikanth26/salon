@@ -60,7 +60,7 @@ class Companies_model extends CI_Model
         $this->db->select('id');
         $this->db->where('customer_id', $id);
         $this->db->order_by('id', 'Desc');
-        $this->db->limit(3);
+        $this->db->limit(10);
         
         $q = $this->db->get('sales');
 
