@@ -1253,13 +1253,9 @@ class Pos_model extends CI_Model
     public function getSuspendedSaleItems($id)
 
     {
-
         $q = $this->db->get_where('suspended_items', array('suspend_id' => $id));
-
         if ($q->num_rows() > 0) {
-
             foreach (($q->result()) as $row) {
-
                 $data[] = $row;
 
             }

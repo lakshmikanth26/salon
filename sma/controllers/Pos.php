@@ -1104,11 +1104,8 @@ class Pos extends MY_Controller
             if ($sid) {
 
                 $suspended_sale = $this->pos_model->getOpenBillByID($sid);
-
                 $inv_items = $this->pos_model->getSuspendedSaleItems($sid);
-
                 $c = rand(100000, 9999999);
-
                 foreach ($inv_items as $item) {
 
                     $row = $this->site->getProductByID($item->product_id);
@@ -2583,7 +2580,10 @@ function discount_suggestions()
 
             foreach ($bills as $bill) {
 
-                $html .= '<li><button type="button" class="btn btn-info sus_sale" id="' . $bill->id . '"><p>' . $bill->suspend_note . '</p><strong>' . $bill->customer . '</strong><br>Date: ' . $bill->date . '<br>Items: ' . $bill->count . '<br>Total: ' . $this->sma->formatMoney($bill->total) . '</button></li>';
+                $html .= '<li><button type="button" class="btn btn-info sus_sale" id="' . $bill->id . '">
+                <p>' . $bill->suspend_note . '</p><strong>' . $bill->customer . '</strong>
+                <br>Date: ' . $bill->date . '<br>Items: ' . $bill->count . '<br>
+                Total: ' . $this->sma->formatMoney($bill->total) . '</button></li>';
 
             }
 

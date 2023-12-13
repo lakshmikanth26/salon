@@ -445,7 +445,7 @@
                                 <input name="order_tax" type="hidden" value="<?= $suspend_sale ? $suspend_sale->order_tax_id : $Settings->default_tax_rate2; ?>" id="postax2">
                                 <input name="discount" type="hidden" value="<?= $suspend_sale ? $suspend_sale->order_discount_id : ''; ?>" id="posdiscount">
                                 <input name="discount_id" type="hidden" id="posdiscount_id">
-                                <input name="coupon" type="hidden" value="<?= $suspend_sale ? $suspend_sale->coupon_id : ''; ?>" id="poscoupon">
+                                <input name="coupon" type="hidden" value="<?= $suspend_sale ? $suspend_sale->coupon_discount_id : ''; ?>" id="poscoupon">
                                 <input name="coupon_id" type="hidden" id="poscoupon_id">
                                 <input type="hidden" name="rpaidby" id="rpaidby" value="cash" style="display: none;"/>
                                 <input type="hidden" name="total_items" id="total_items" value="0" style="display: none;"/>
