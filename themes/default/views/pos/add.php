@@ -395,7 +395,7 @@
                                                 </div>
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-warning"
-                                                            id="suspend"><?= lang('suspend'); ?></button>
+                                                            id="suspend"><?= lang('Bill Hold'); ?></button>
                                                 </div>
                                             </div>
                                         </div>
