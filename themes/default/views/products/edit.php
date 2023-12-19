@@ -71,7 +71,7 @@ if (!empty($variants)) {
                     <div class="form-group">
                         <?= lang("product_type", "type") ?>
                         <?php
-                        $opts = array('standard' => lang('standard'), 'combo' => lang('combo'), 'digital' => lang('digital'), 'service' => lang('service'));
+                        $opts = array('standard' => lang('standard'), 'combo' => lang('combo'), 'digital' => lang('digital'), 'service' => lang('service'),'membership' => lang('Membership'), 'consumable'=> lang('Consumable Products'));
                         echo form_dropdown('type', $opts, (isset($_POST['type']) ? $_POST['type'] : ($product ? $product->type : '')), 'class="form-control" id="type" required="required"');
                         ?>
                     </div>

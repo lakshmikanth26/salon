@@ -79,7 +79,28 @@ if ($this->input->post('subcategory')) {
                 {id: '', text: '<?= lang('select_category_to_load') ?>'}
             ]
         });
-            
+
+    $('#product_type').change(function () {
+            var v = '?product_type=' + $(this).val()
+            $('#modal-loading').show();
+            if (v) {
+                $.ajax({
+                    type: "get",
+                    async: false,
+                    url: "<?= site_url('products/getProducts') ?>" + v,
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data)
+                    },
+                    error: function () {
+                        bootbox.alert('<?= lang('ajax_error') ?>');
+                        $('#modal-loading').hide();
+                    }
+                });
+            }
+            $('#modal-loading').hide();
+    });
+
     $('#category').change(function () {
             var v = $(this).val();
             $('#modal-loading').show();
@@ -129,7 +150,7 @@ if ($this->input->post('subcategory')) {
 
                     <?php echo form_open("products/index"); ?>
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="category"><?= lang("category"); ?></label>
                                 <?php
@@ -142,7 +163,15 @@ if ($this->input->post('subcategory')) {
                                 
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="product_type"><?= lang("Product Type"); ?></label>
+                                <?php
+                                    echo form_dropdown('product_type', $product_types, (isset($_POST['product_type']) ? $_POST['product_type'] : ""), 'class="form-control select" id="product_type" placeholder="' . lang("select") . " " . lang("Product Type") . '" style="width:100%"')
+                                ?>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
                         <div class="form-group">
                         <?= lang("subcategory", "subcategory") ?>
                             <div class="controls" id="subcat_data"> <?php
@@ -152,7 +181,7 @@ if ($this->input->post('subcategory')) {
                         </div>
                     </div>
                         
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <?= lang("gst", "gst"); ?>
                                 <?php 

@@ -25,6 +25,13 @@ class Products extends MY_Controller
             '2' => '2 Year',
             '3'  => '3 Year',
         );
+        $this->data['product_types'] = array(
+            'all'   => lang("All"),
+            'standard' => lang('standard'),
+            'service' => lang('service'),
+            'membership' => lang('Membership'),
+            'consumable'=> lang('Consumable Products')
+        );
     }
 
     function index($warehouse_id = NULL)
@@ -47,6 +54,19 @@ class Products extends MY_Controller
         $meta = array('page_title' => lang('products'), 'bc' => $bc);
         $this->page_construct('products/index', $meta, $this->data);
     }
+    function prod(){
+        if ($this->input->get('product_type')) {
+            $product_type = $this->input->get('product_type');
+        } else {
+            $product_type = NULL;
+        }
+        $responseData = array('selectedValue' => $product_type, 'message' => 'Success');
+
+        // Convert the array to JSON and send it as the response
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($responseData));
+    }
     
     function getProducts($warehouse_id = NULL)
     {
@@ -55,6 +75,11 @@ class Products extends MY_Controller
             $category = $this->input->get('category');
         } else {
             $category = NULL;
+        }
+        if ($this->input->get('product_type')) {
+            $product_type = $this->input->get('product_type');
+        } else {
+            $product_type = NULL;
         }
         if ($this->input->get('subcategory')) {
             $subcategory = $this->input->get('subcategory');
@@ -109,11 +134,13 @@ class Products extends MY_Controller
                 ->join('subcategories', 'subcategories.id=products.subcategory_id', 'left')
                 ->join('tax_rates', 'tax_rates.id=products.tax_rate', 'left')
                 ->where('warehouses_products.warehouse_id', $warehouse_id)
-                ->where('products.type', 'standard')
                 //->where('warehouses_products.quantity !=', 0)
                 ->group_by("warehouses_products.product_id");
                 if ($category) {
                 $this->datatables->where($this->db->dbprefix('products') . ".category_id", $category);
+                }
+                if ($product_type) {
+                    $this->datatables->where($this->db->dbprefix('products') . ".type", $product_type);
                 }
                 if ($subcategory) {
                 $this->datatables->where($this->db->dbprefix('products') . ".subcategory_id", $subcategory);
@@ -128,13 +155,16 @@ class Products extends MY_Controller
                 ->join('categories', 'products.category_id=categories.id', 'left')
                 ->join('subcategories', 'subcategories.id=products.subcategory_id', 'left')
                 ->join('tax_rates', 'tax_rates.id=products.tax_rate', 'left')
-                ->where('products.type', 'standard')
+                // ->where('products.type', '')
                 ->group_by("products.id");
                 if ($category) {
                 $this->datatables->where($this->db->dbprefix('products') . ".category_id", $category);
                 }
                 if ($subcategory) {
                 $this->datatables->where($this->db->dbprefix('products') . ".subcategory_id", $subcategory);
+                }
+                if ($product_type) {
+                    $this->datatables->where($this->db->dbprefix('products') . ".type", $product_type);
                 }
                 if ($gst) {
                 $this->datatables->where($this->db->dbprefix('tax_rates') . ".type", $gst);
