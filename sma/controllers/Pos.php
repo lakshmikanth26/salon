@@ -781,6 +781,7 @@ class Pos extends MY_Controller
 
                     $total += $item_net_price * $item_quantity;
 
+                    
                 }
 
             }
@@ -794,64 +795,6 @@ class Pos extends MY_Controller
                 krsort($products);
 
             }
-
-
-
-            if ($this->input->post('discount')) {
-
-                $order_discount_id = $this->input->post('discount');
-
-                $discount_id = $this->input->post('discount_id');
-
-                $opos = strpos($order_discount_id, $percentage);
-
-                if ($opos !== false) {
-
-                    $ods = explode("%", $order_discount_id);
-
-                    $order_discount = $this->sma->formatDecimal((($total + $product_tax) * (Float)($ods[0])) / 100);
-
-                } else {
-
-                    $order_discount = $this->sma->formatDecimal($order_discount_id);
-
-                }
-
-            } else {
-
-                $order_discount_id = NULL;
-                $discount_id = NULL;
-
-            }
-
-            if ($this->input->post('coupon')) {
-
-                $coupon_discount_id = $this->input->post('coupon');
-
-                $coupon_id = $this->input->post('coupon_id');
-
-                $copos = strpos($coupon_discount_id, $percentage);
-
-                if ($copos !== false) {
-
-                    $cods = explode("%", $coupon_discount_id);
-
-                    $coupon_discount = $this->sma->formatDecimal((($total + $product_tax) * (Float)($cods[0])) / 100);
-
-                } else {
-
-                    $coupon_discount = $this->sma->formatDecimal($coupon_discount_id);
-
-                }
-
-            } else {
-
-                $coupon_discount_id = NULL;
-                $coupon_id = NULL;
-
-            }
-            $total_discount = $this->sma->formatDecimal($coupon_discount + $order_discount + $product_discount);
-
 
 
             if ($this->Settings->tax2) {
@@ -880,9 +823,64 @@ class Pos extends MY_Controller
 
             }
 
-
-
             $total_tax = $this->sma->formatDecimal($product_tax + $order_tax);
+            $ttotal = $total + $total_tax;
+            if ($this->input->post('discount')) {
+
+                $order_discount_id = $this->input->post('discount');
+
+                $discount_id = $this->input->post('discount_id');
+
+                $opos = strpos($order_discount_id, $percentage);
+
+                if ($opos !== false) {
+
+                    $ods = explode("%", $order_discount_id);
+
+                    $order_discount = $this->sma->formatDecimal((($ttotal) * (Float)($ods[0])) / 100);
+
+                } else {
+
+                    $order_discount = $this->sma->formatDecimal($order_discount_id);
+
+                }
+
+            } else {
+
+                $order_discount_id = NULL;
+                $discount_id = NULL;
+
+            }
+
+
+            if ($this->input->post('coupon')) {
+
+                $coupon_discount_id = $this->input->post('coupon');
+
+                $coupon_id = $this->input->post('coupon_id');
+
+                $copos = strpos($coupon_discount_id, $percentage);
+
+                if ($copos !== false) {
+
+                    $cods = explode("%", $coupon_discount_id);
+
+                    $coupon_discount = $this->sma->formatDecimal((($ttotal) * (Float)($cods[0])) / 100);
+
+                } else {
+
+                    $coupon_discount = $this->sma->formatDecimal($coupon_discount_id);
+
+                }
+
+            } else {
+
+                $coupon_discount_id = NULL;
+                $coupon_id = NULL;
+
+            }
+            $total_discount = $this->sma->formatDecimal($coupon_discount + $order_discount + $product_discount);
+
 
             $grand_total = $this->sma->formatDecimal($this->sma->formatDecimal($total) + $total_tax + $this->sma->formatDecimal($shipping) - $order_discount - $coupon_discount);
 
@@ -1321,7 +1319,8 @@ function discount_suggestions()
 
                 $pds = explode("%", $discount);
 
-                $pr_discount = (($this->sma->formatDecimal($non_total)) * (Float)($pds[0])) / 100;
+                // $pr_discount = (($this->sma->formatDecimal($total)) * (Float)($pds[0])) / 100;
+                $pr_discount = $discount;
 
             } else {
 
@@ -1336,7 +1335,7 @@ function discount_suggestions()
             }else{
             
             if(floatval($row->price_for_value) <= floatval($total)){
-            $dis = floatval($non_total) - floatval($total);
+            $dis = floatval($total) - floatval($total);
             
             $percentage = '%';
 
@@ -1348,8 +1347,8 @@ function discount_suggestions()
 
                 $pds = explode("%", $discount);
 
-                $pr_discount = (($this->sma->formatDecimal($non_total)) * (Float)($pds[0])) / 100;
-
+                // $pr_discount = (($this->sma->formatDecimal($total)) * (Float)($pds[0])) / 100;
+                $pr_discount = $discount;
             } else {
 
                 $pr_discount = $this->sma->formatDecimal($discount);
@@ -1357,7 +1356,7 @@ function discount_suggestions()
             }
             $fdis = floatval($pr_discount) - floatval($dis);  
 
-            $pr = array('status' => 1, 'value'=> $fdis, 'name' => $row->name);
+            $pr = array('status' => 1, 'value'=> $pr_discount, 'name' => $row->name);
             }else{
             $pr = array('status' => 0,'fail' => 'Price Not reached above"'.$row->price_for_value.'"');
             }
@@ -1377,8 +1376,8 @@ function discount_suggestions()
 
                 $pds = explode("%", $discount);
 
-                $pr_discount = (($this->sma->formatDecimal($non_total)) * (Float)($pds[0])) / 100;
-
+                // $pr_discount = (($this->sma->formatDecimal($total)) * (Float)($pds[0])) / 100;
+                $pr_discount = $discount;
             } else {
 
                 $pr_discount = $this->sma->formatDecimal($discount);

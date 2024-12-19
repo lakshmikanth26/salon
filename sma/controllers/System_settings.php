@@ -1312,13 +1312,13 @@ class system_settings extends MY_Controller
     {
         $this->load->library('datatables');
         $this->datatables
-            ->select("subcategories.id as id, subcategories.image as image, subcategories.code as scode, subcategories.name as sname, categories.name as cname")
+            ->select($this->db->dbprefix('subcategories').".id as id, ".$this->db->dbprefix('subcategories').".image as image, ".$this->db->dbprefix('subcategories').".code as scode, ".$this->db->dbprefix('subcategories').".name as sname, ".$this->db->dbprefix('categories').".name as cname", false)
             ->from("subcategories")
             ->join('categories', 'categories.id = subcategories.category_id', 'left')
             ->group_by('subcategories.id');
 
         if ($parent_id) {
-            $this->datatables->where('category_id', $parent_id);
+            $this->datatables->where($this->db->dbprefix('subcategories').".category_id", $parent_id);
         }
 
         $this->datatables->add_column("Actions", "<center><a href='" . site_url('system_settings/edit_subcategory/$1') . "' data-toggle='modal' data-target='#myModal' class='tip' title='" . lang("edit_subcategory") . "'><i class=\"fa fa-edit\"></i></a> <a href='#' class='tip po' title='<b>" . lang("delete_subcategory") . "</b>' data-content=\"<p>" . lang('r_u_sure') . "</p><a class='btn btn-danger po-delete' href='" . site_url('system_settings/delete_subcategory/$1') . "'>" . lang('i_m_sure') . "</a> <button class='btn po-close'>" . lang('no') . "</button>\"  rel='popover'><i class=\"fa fa-trash-o\"></i></a></center>", "id");

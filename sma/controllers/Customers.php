@@ -144,13 +144,27 @@ class Customers extends MY_Controller
         if ($this->input->get('id')) {
             $id = $this->input->get('id');
         }
-
+        $communicationString = '';
+        
         $company_details = $this->companies_model->getCompanyByID($id);
         if ($this->input->post('email') != $company_details->email) {
             $this->form_validation->set_rules('code', lang("email_address"), 'is_unique[companies.email]');
         }
+        if($this->input->post('communication')){
+            $communicationString = implode(',', $this->input->post('communication'));
+        }
+        
+        // if (strpos($communicationString, 'Whatsapp')) {
+        //     $this->form_validation->set_rules('whatsapp', 'whatsapp', 'required|trim');
+        // }
+
+        // if (strpos($communicationString, 'email')) {
+        //     $this->form_validation->set_rules('email', 'email', 'required|trim');
+        // }
 
         if ($this->form_validation->run('companies/add') == true) {
+
+            
             $cg = $this->site->getCustomerGroupByID($this->input->post('customer_group'));
             $data = array('name' => $this->input->post('name'),
                 'email' => $this->input->post('email'),
@@ -176,7 +190,7 @@ class Customers extends MY_Controller
                 'prefix' => $this->input->post('prefix'),
                 'gender' => $this->input->post('gender'),
                 'dob' => $this->input->post('dob'),
-                'communication' => $this->input->post('communication'),
+                'communication' => $communicationString,
                 'whatsapp' => $this->input->post('whatsapp'),
                 'anniversary' => $this->input->post('anniversary'),
             );

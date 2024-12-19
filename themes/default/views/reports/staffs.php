@@ -12,7 +12,7 @@ $v = "";
         var oTable = $('#StaffData').dataTable({
             "aaSorting": [[0, "asc"], [1, "asc"]],
             "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "<?= lang('all') ?>"]],
-            "iDisplayLength": <?= $Settings->rows_per_page ?>,
+            "iDisplayLength": -1,
             'bProcessing': true, 'bServerSide': true,
             'sAjaxSource': '<?= site_url('reports/getStaffs?v=1' . $v) ?>',
             'fnServerData': function (sSource, aoData, fnCallback) {
@@ -25,23 +25,25 @@ $v = "";
             "aoColumns": [null, null, null, null, {
                 "mRender": decimalFormat,
                 "bSearchable": false
-            },{"mRender": currencyFormat, "bSearchable": false},{"mRender": currencyFormat, "bSearchable": false}, {"mRender": currencyFormat, "bSearchable": false}, {"mRender": currencyFormat, "bSearchable": false}],
+            },{"mRender": currencyFormat, "bSearchable": false},{"mRender": currencyFormat, "bSearchable": false}, {"mRender": currencyFormat, "bSearchable": false}, {"mRender": currencyFormat, "bSearchable": false}, {"mRender": currencyFormat, "bSearchable": false}],
             "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
-                var gtotal = 0, tsmem = 0, ts = 0,non_member=0,member=0,net_amount=0;
+                var gtotal = 0, tsmem = 0, ts = 0,non_member=0,member=0,net_amount=0;discount=0;
                 for (var i = 0; i < aaData.length; i++) {
                     ts += parseFloat(aaData[aiDisplay[i]][3]);
                     tsmem += parseFloat(aaData[aiDisplay[i]][4]);
                     non_member += parseFloat(aaData[aiDisplay[i]][5]);
                     member += parseFloat(aaData[aiDisplay[i]][6]);
-                    net_amount += parseFloat(aaData[aiDisplay[i]][7]);
-                    gtotal += parseFloat(aaData[aiDisplay[i]][8]);
+                    discount += parseFloat(aaData[aiDisplay[i]][7]);
+                    net_amount += parseFloat(aaData[aiDisplay[i]][8]);
+                    gtotal += parseFloat(aaData[aiDisplay[i]][9]);
                 }
                 var nCells = nRow.getElementsByTagName('th');
                 nCells[3].innerHTML = currencyFormat(parseFloat(ts));
                 nCells[4].innerHTML = currencyFormat(parseFloat(tsmem));
-                nCells[8].innerHTML = currencyFormat(parseFloat(gtotal));
+                nCells[9].innerHTML = currencyFormat(parseFloat(gtotal));
                 nCells[5].innerHTML = currencyFormat(parseFloat(non_member));
-                nCells[7].innerHTML = currencyFormat(parseFloat(net_amount));
+                nCells[7].innerHTML = currencyFormat(parseFloat(discount));
+                nCells[8].innerHTML = currencyFormat(parseFloat(net_amount));
                 nCells[6].innerHTML = currencyFormat(parseFloat(member));
             }
         }).fnSetFilteringDelay().dtFilter([
@@ -97,7 +99,8 @@ $v = "";
                             <th><?= lang("new_membership_sold"); ?></th>
                             <th><?= lang("Non_member"); ?></th>
                             <th><?= lang("member"); ?></th>
-                           
+                            <th><?= lang("discount"); ?></th>
+                            
                             <th><?= lang("net_amount"); ?></th>
                             <th><?= lang("gross_amount"); ?></th>
                            
@@ -117,7 +120,8 @@ $v = "";
                             <th><?= lang("total_membership_sold"); ?></th>
                             <th><?= lang("Non_member"); ?></th>
                             <th><?= lang("member"); ?></th>
-                           
+                            <th><?= lang("discount"); ?></th>
+                            
                             <th><?= lang("net_amount"); ?></th>
                             <th><?= lang("gross_amount"); ?></th>
                            

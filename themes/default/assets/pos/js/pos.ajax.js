@@ -1362,16 +1362,21 @@ function loadItems() {
 		if (posdiscount = localStorage.getItem('posdiscount')) {
 			var ds = posdiscount;
 			if (ds.indexOf("%") !== -1) {
-				var pds = ds.split("%");
+				var pds = ds.split("%"); 
 				if (!isNaN(pds[0])) {
-					order_discount = formatDecimal(((total) * parseFloat(pds[0])) / 100);
+					if(group == 5){
+						order_discount = formatDecimal(((member_total) * parseFloat(pds[0])) / 100);
+					}else
+					{
+						order_discount = formatDecimal(((total) * parseFloat(pds[0])) / 100);
+					}
 				} else {
 					order_discount = formatDecimal(ds);
 				}
 			} else {
 				order_discount = formatDecimal(ds);
 			}
-
+			console.log('order_discount', order_discount)
 			//total_discount += parseFloat(order_discount);
 		}
 
@@ -1380,10 +1385,16 @@ function loadItems() {
 			if (cs.indexOf("%") !== -1) {
 				var pcs = cs.split("%");
 				if (!isNaN(pcs[0])) {
-					coupon_discount = formatDecimal(((total) * parseFloat(pcs[0])) / 100);
+					if(group == 5){
+						coupon_discount = formatDecimal(((member_total) * parseFloat(pcs[0])) / 100);
+					}else
+					{
+						coupon_discount = formatDecimal(((total) * parseFloat(pcs[0])) / 100);
+					}
 				} else {
 					coupon_discount = formatDecimal(cs);
 				}
+				
 			} else {
 				coupon_discount = formatDecimal(cs);
 			}
@@ -1440,14 +1451,14 @@ function loadItems() {
 		}
 		$('#total').html('<span style="color:red">'+formatMoney(member_total_without_gst)+'</span> | '+formatMoney(total_without_gst));
 		
-		$('#totaltext').val(parseFloat(total_without_gst_final));
+		$('#totaltext').val(parseFloat(total_final));
 		
 		$('#totalnontext').val(parseFloat(total_without_gst));
 		
 		$('#titems').text((an - 1) + ' (' + (parseFloat(count) - 1) + ')');
 		
 		$('#total_items').val((parseFloat(count) - 1));
-		
+		console.log('order_discount1', order_discount);
 		$('#tds').text('('+formatMoney(product_discount)+') '+formatMoney(order_discount + coupon_discount));
 		
 		//$('#tds1').text(formatMoney(coupon_discount));

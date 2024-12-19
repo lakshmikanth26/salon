@@ -311,15 +311,13 @@ if ($modal) {
 
 
 
-                    if ($row->item_discount != 0) {
+                        if ($row->item_discount != 0) {
 
-                        echo '<del>' . $this->sma->formatMoney($row->subtotal + ($row->item_discount / $row->quantity) + ($row->item_tax / $row->quantity)) . '</del> ';
+                            echo '<del>' . $this->sma->formatMoney($row->subtotal + ($row->item_discount / $row->quantity) + ($row->item_tax / $row->quantity)) . '</del> ';
 
-                    }
+                        }
 
                         echo $this->sma->formatMoney($row->subtotal) . '</td>';
-
-                    
 
                     }
 
@@ -327,19 +325,17 @@ if ($modal) {
 
                     {
 
-                    echo '<td>';
+                        echo '<td>';
 
-                    if ($row->item_discount != 0) {
+                        if ($row->item_discount != 0) {
 
-                        echo '<del>' . $this->sma->formatMoney($row->net_unit_price + ($row->item_discount / $row->quantity) + ($row->item_tax / $row->quantity)) . '</del> ';
+                            echo '<del>' . $this->sma->formatMoney($row->net_unit_price + ($row->item_discount / $row->quantity) + ($row->item_tax / $row->quantity)) . '</del> ';
 
-                    }
+                        }
 
-                    echo $this->sma->formatMoney($row->net_unit_price) . '</td>
+                        echo $this->sma->formatMoney($row->net_unit_price) . '</td>
 
-                    <td>('.$taxr.')'.$this->sma->formatMoney(($row->item_tax / $row->quantity) * $row->quantity).'</td>';
-
-  
+                        <td>('.$taxr.')'.$this->sma->formatMoney(($row->item_tax / $row->quantity) * $row->quantity).'</td>';
 
                     }
 

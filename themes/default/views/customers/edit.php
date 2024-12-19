@@ -18,7 +18,7 @@
                     foreach ($customer_groups as $customer_group) {
                         $cgs[$customer_group->id] = $customer_group->name;
                     }
-                    echo form_dropdown('customer_group', $cgs, $customer->customer_group_id, 'class="form-control tip select" id="customer_group" style="width:100%;" required="required" disabled="disabled"');
+                    echo form_dropdown('customer_group', $cgs, $customer->customer_group_id, 'class="form-control tip select" id="customer_group" style="width:100%;" required="required" ');
                     ?>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                             </div>
                             <div class="form-check col-md-4">
                                 <label>
-                                    <?php echo form_checkbox('communication[]', 'Whatsapp',(strpos($customer->communication, 'whatsapp') !== false) ? TRUE : FALSE, "class='whatsapp-checkbox'"); ?> Whatsapp
+                                    <?php echo form_checkbox('communication[]', 'Whatsapp',(strpos($customer->communication, 'Whatsapp') !== false) ? TRUE : FALSE, "class='whatsapp-checkbox'"); ?> Whatsapp
                                 </label>
                             </div>
                         </div>

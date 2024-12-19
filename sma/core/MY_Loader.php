@@ -26,8 +26,9 @@ class MY_Loader extends CI_Loader{
                 }
             }
         }
-        
         return $this->_ci_load(array('_ci_view' => $nv, '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => $return));
+    
+        // return $this->_ci_load(array('_ci_view' => $nv, '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => $return));
     }
 
 }

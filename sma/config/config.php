@@ -17,9 +17,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
-// $config['base_url'] = 'https://salon.indocweb.in/heightsofcut';
+// $config['base_url'] = 'https://salon.indocweb.in/demo';
 $config['base_url'] = '';
-
 
 /*
 |--------------------------------------------------------------------------

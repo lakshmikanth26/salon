@@ -35,9 +35,10 @@ if ($this->input->post('staff')) {
                 "mRender": pqFormat
             }, {"mRender": currencyFormat},{"mRender": currencyFormat},null,null,null,null,null,null,null, {"mRender": currencyFormat}, {"mRender": currencyFormat}, {"mRender": row_status}],
             "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
-                var gtotal = 0, paid = 0, balance = 0, paid_by_cash = 0, paid_by_cc = 0, paid_by_bajaj = 0, paid_by_neft = 0, paid_by_paytm = 0, paid_by_cheque = 0;
+                var gtotal = 0, total = 0, paid = 0, balance = 0, paid_by_cash = 0, paid_by_cc = 0, paid_by_bajaj = 0, paid_by_neft = 0, paid_by_paytm = 0, paid_by_cheque = 0;
                 for (var i = 0; i < aaData.length; i++) {
                     gtotal += parseFloat(aaData[aiDisplay[i]][7]);
+                    total += parseFloat(aaData[aiDisplay[i]][8]);
                     paid_by_cash += parseFloat(aaData[aiDisplay[i]][9]);
                     paid_by_cc += parseFloat(aaData[aiDisplay[i]][10]); 
                     paid_by_bajaj += parseFloat(aaData[aiDisplay[i]][11]);
@@ -49,6 +50,7 @@ if ($this->input->post('staff')) {
                 }
                 var nCells = nRow.getElementsByTagName('th');
                 nCells[7].innerHTML = currencyFormat(parseFloat(gtotal));
+                nCells[8].innerHTML = currencyFormat(parseFloat(total));
                 nCells[9].innerHTML = currencyFormat(parseFloat(paid_by_cash));
                 nCells[10].innerHTML = currencyFormat(parseFloat(paid_by_cc));
                 nCells[11].innerHTML = currencyFormat(parseFloat(paid_by_bajaj));

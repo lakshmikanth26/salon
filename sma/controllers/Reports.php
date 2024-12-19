@@ -4266,13 +4266,12 @@ class Reports extends MY_Controller
         if ($pdf || $xls) {
 
              $this->db
-                ->select($this->db->dbprefix('staffs') . ".id as id," .$this->db->dbprefix('staffs'). ".name, " .$this->db->dbprefix('staffs'). ".phone, " .$this->db->dbprefix('staffs'). ".email, count(" . $this->db->dbprefix('sales') . ".id) as total,mem, COALESCE(sum(net_unit_price), 0) as total_amount", FALSE)
+                ->select($this->db->dbprefix('staffs') . ".id as id," .$this->db->dbprefix('staffs'). ".name, " .$this->db->dbprefix('staffs'). ".phone, " .$this->db->dbprefix('staffs'). ".email, count(" . $this->db->dbprefix('sales') . ".id) as total, mem, COALESCE(sum(net_unit_price), 0) as total_amount, COALESCE(sum(total_discount / total_items), 0) as total_discount", FALSE)
                 ->from("staffs")
                 ->join('sale_staffs', 'sale_staffs.staff_id=staffs.id')
                 ->join('sales', 'sale_staffs.sale_id=sales.id')
-                ->join('(select staff_id, 
-                                   count(IF(sma_sale_staffs.product_id = "242", sma_sale_staffs.id, null)) as mem    
-                                 from sma_sale_staffs where sma_sale_staffs.created_on between "'. $start . '" and "' . $end.'" group by staff_id) i', 'i.staff_id = sma_staffs.id', 'left')
+                ->join('(select staff_id, count(s.id) as mem    
+                                 from sma_sale_staffs as s join sma_products as p on p.id = s.product_id  where p.type = "membership" and s.created_on between "'. $start . '" and "' . $end.'" group by staff_id) i', 'i.staff_id = sma_staffs.id', 'left')
            
                 ->where($this->db->dbprefix('sale_staffs') . '.created_on BETWEEN ' . $start . ' and ' . $end)
                 ->order_by('staffs.company asc')
@@ -4368,24 +4367,39 @@ class Reports extends MY_Controller
 
             $this->load->library('datatables');
             $this->datatables
-                ->select($this->db->dbprefix('staffs') . ".id as id," .$this->db->dbprefix('staffs'). ".name, " .$this->db->dbprefix('staffs'). ".phone, " .$this->db->dbprefix('staffs'). ".email, count(" . $this->db->dbprefix('sales') . ".id) as total, i.mem, i.non_member,i.member, sum(net_unit_price) as net_amount, COALESCE(sum(unit_price), 0) as grand_total", FALSE)
-                ->from("staffs")
-                ->join('sale_staffs', 'sale_staffs.staff_id=staffs.id')
-                ->join('sales', 'sale_staffs.sale_id=sales.id')
+                ->select($this->db->dbprefix('staffs') . ".id as id," .$this->db->dbprefix('staffs'). ".name, " .$this->db->dbprefix('staffs'). ".phone, " .$this->db->dbprefix('staffs'). ".email, count(" . $this->db->dbprefix('sales') . ".id) as total, i.mem as mem, (i.non_member) as non_member,(i.member) as member, t.total_discount, (sum(" . $this->db->dbprefix('sale_staffs') . ".net_unit_price) - t.total_discount) as net_amount, COALESCE((sum(" . $this->db->dbprefix('sale_staffs') . ".unit_price) - t.total_discount), 0) as grand_total", FALSE)
+                ->from('sales')
+                
+                ->join('sale_staffs', 'sale_staffs.sale_id=sales.id', 'left')
+                ->join("staffs", 'sale_staffs.staff_id=staffs.id', 'left')
                 
                 ->join('(select sma_sale_staffs.staff_id, 
-                                   count(IF(sma_sale_staffs.product_id = "242", sma_sale_staffs.id, null)) as mem, sum(IF(sma_companies.customer_group_id != "5", sma_sale_staffs.net_unit_price, 0)) as non_member,
+                                   count(IF(sma_products.type = "membership", sma_sale_staffs.id, null)) as mem, sum(IF(sma_companies.customer_group_id != "5", sma_sale_staffs.net_unit_price, 0)) as non_member,
                                    sum(IF(sma_companies.customer_group_id = "5", sma_sale_staffs.net_unit_price, 0)) as member
                                  from sma_sale_staffs 
+                                 left join sma_products on sma_products.id = sma_sale_staffs.product_id
                                  join sma_companies on sma_companies.id = sma_sale_staffs.customer_id
                                  where sma_sale_staffs.created_on between '. $start . ' and ' . $end.' group by staff_id) i', 'i.staff_id = sma_staffs.id', 'left')
+
+                ->join("(select sma_sale_staffs.staff_id, 
+                                 if(total_discount > 0, SUM(
+                        CASE
+                        WHEN order_discount_id REGEXP '[%^]' THEN CAST(REPLACE(order_discount_id, '%', '') AS DECIMAL(5,2)) / 100 * " . $this->db->dbprefix('sale_staffs') . ".unit_price      
+                        ELSE CAST((order_discount_id / total_items) AS DECIMAL(10,2)) 
+                        END
+                    ), 0) as total_discount
+                               from sma_sale_staffs 
+                            left join sma_sales on sma_sales.id = sma_sale_staffs.sale_id
+
+                               where sma_sales.date between ". $start . " and " . $end." and total_discount > 0 group by staff_id) t", 't.staff_id = sma_staffs.id', 'left')
+                                               
                                 
-                ->where($this->db->dbprefix('sale_staffs') . '.created_on BETWEEN ' . $start . ' and ' . $end)
+                ->where($this->db->dbprefix('sales') . '.date BETWEEN ' . $start . ' and ' . $end)
                 ->group_by('staffs.id')
                 ->group_by('sale_staffs.staff_id')
                 ->unset_column('id');
-                //$this->db->get();
-                //print_r($this->db->last_query()); die();
+                // $this->db->get();
+                // print_r($this->db->last_query()); die();
             echo $this->datatables->generate();
 
         }

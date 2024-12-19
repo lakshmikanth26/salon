@@ -233,9 +233,9 @@ if ($modal) {
                 $r = 1;
 
                 $tax_summary = array();
-
+                $total = 0;        
                 foreach ($rows as $row) {
-
+                    $total += $row->subtotal;
                     if (isset($tax_summary[$row->tax_code])) {
 
                         $tax_summary[$row->tax_code]['items'] += $row->quantity;
@@ -325,7 +325,7 @@ if ($modal) {
 
 
 
-                    echo '<td class="text-right">' . $this->sma->formatMoney($row->subtotal - (($row->item_tax / $row->quantity) * $row->quantity)) . '</td></tr>';
+                    echo '<td class="text-right">' . $this->sma->formatMoney($row->subtotal) . '</td></tr>';
 
                     $r++;
 
@@ -337,27 +337,27 @@ if ($modal) {
 
                 <tfoot>
 
-                <tr>
+                <tr style="border-top: 2px solid #000;">
 
-                    <th colspan='2'><?= lang("total"); ?></th>
+                    <td colspan='2'><?= lang("total"); ?></td>
 
-                    <th><?= intval($inv->total_items); ?></th>
+                    <td><?= intval($inv->total_items); ?></td>
 
                     <?php
 
                     if ($inv->invoice_type != 1) {  ?>
 
-                    <th colspan="2"></th>
+                    <td colspan="2"></td>
 
                     <?php } else { ?>
 
-                    <th colspan="2"></th>
+                    <td colspan="2"></td>
 
                     <!-- <th><?= $this->sma->formatMoney($inv->product_tax); ?></th> -->
 
                     <?php } ?>
 
-                    <th class="text-right"><?= $this->sma->formatMoney($inv->total); ?></th>
+                    <td class="text-right"><?= $this->sma->formatMoney($total); ?></td>
 
                 </tr>
                 <?php if ($inv->invoice_type == 1) { 
