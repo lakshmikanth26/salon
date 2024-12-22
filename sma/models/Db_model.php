@@ -8,6 +8,23 @@ class Db_model extends CI_Model
         parent::__construct();
     }
 
+    public function get_total_members_count() {
+        $this->db->from('companies');
+        $this->db->where('customer_group_name', 'MEMBER');
+        return $this->db->count_all_results();
+    }
+
+    public function get_expiring_members_count() {
+        $date_today = date('Y-m-d');
+        $date_30_days = date('Y-m-d', strtotime('+30 days'));
+    
+        $this->db->from('companies');
+        $this->db->where('customer_group_name', 'MEMBER');
+        $this->db->where('cf2 >=', $date_today);
+        $this->db->where('cf2 <=', $date_30_days);
+        return $this->db->count_all_results();
+    }
+    
     public function getLatestSales()
     {
         if ($this->Settings->restrict_user && !$this->Owner && !$this->Admin) {

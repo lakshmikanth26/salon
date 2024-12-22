@@ -1,5 +1,81 @@
 <link rel="stylesheet" href="<?= $assets ?>fullcalendar/dist/fullcalendar.css">
+<style>
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
 
+    .grid-container {
+        display: flex;
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .card {
+        cursor: pointer;
+        background: #a2cbe375;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        height: 150px;
+        width: 250px;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .card .icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+
+    .card .icon.blue {
+        color: #2196F3;
+    }
+
+    .card .icon.green {
+        color: #4CAF50;
+    }
+
+    .card .icon.orange {
+        color: #FF9800;
+    }
+
+    .card .icon.red {
+        color: #F44336;
+    }
+
+    .card h3 {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .card p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #555;
+    }
+
+    .card a {
+        margin-top: 15px;
+        display: inline-block;
+        font-size: 0.9rem;
+        color: #2196F3;
+        text-decoration: none;
+    }
+
+    .card a:hover {
+        text-decoration: underline;
+    }
+</style>
 <script type="text/javascript" src="<?= $assets ?>availability-calendar/scripts/components/jquery.min.js"></script>
 <script src="<?= $assets ?>js/moment.min.js"></script>
 
@@ -37,7 +113,37 @@ function row_status($x)
         $mtax3[] = $month_sale->ptax;
     }
     ?>
+    <div class="row" style="margin-bottom: 15px;">
+        <div class="col-lg-12">
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="blue"><i class="fa fa-th"></i><span class="break"></span><?= lang('membership_users') ?></h2>
+                </div>
+                <div class="box-content">
+                    <div class="grid-container">
+                        <!-- Total Members Card -->
+                        <div class="card">
+                            <div class="icon blue">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <h3>Total Membership Users</h3>
+                            <b><?php echo $total_members_count; ?></b>
+                        </div>
 
+                        <!-- Expiring Memberships Card -->
+                        <div class="card">
+                            <div class="icon orange">
+                                <i class="fa fa-street-view"></i>
+                            </div>
+                            <h3>Expiring in 30 Days</h3>
+                            <b><?php echo $expiring_members_count; ?></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="box" style="margin-bottom: 15px;">
         <div class="box-header">
             <h2 class="blue"><i class="fa-fw fa fa-bar-chart-o"></i><?= lang('overview_chart'); ?></h2>

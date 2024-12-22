@@ -97,8 +97,8 @@ class Customers extends MY_Controller
                 'email' => $this->input->post('email'),
                 'group_id' => '3',
                 'group_name' => 'customer',
-                'customer_group_id' => $this->input->post('customer_group'),
-                'customer_group_name' => $cg->name,
+                'customer_group_id' => 4,
+                'customer_group_name' => 'NON MEMBER',
                 'company' => $this->input->post('company'),
                 'address' => $this->input->post('address'),
                 'vat_no' => $this->input->post('vat_no'),
@@ -398,7 +398,21 @@ class Customers extends MY_Controller
         $this->sma->checkPermissions('index');
         $row = $this->companies_model->getCompanyByID($id);
 
-        if($row->customer_group_id == '5'){
+        if (!empty($row->cf1) && !empty($row->cf2)) {
+            // Calculate the difference in days
+            $startDate = new DateTime($row->cf1);
+            $endDate = new DateTime($row->cf2);
+            $interval = $endDate->diff($startDate);
+            $expiresIn = $interval->days;
+        
+            if ($expiresIn < 1) {
+                $expiresIn = 0;
+            }
+        } else {
+            $expiresIn = 0;
+        }
+
+        if($row->customer_group_name == 'MEMBER' && $expiresIn > 0){
             $c_g =  "<span class='btn btn-danger'>Member</span>";
         }else{
             $c_g =  "Non Member";
@@ -427,7 +441,8 @@ class Customers extends MY_Controller
         'anniversary' => $row->anniversary,
         'dob' => $row->dob,
         'cf1' => $row->cf1,
-        'cf2' => $row->cf2
+        'cf2' => $row->cf2,
+        'expiresIn' => $expiresIn
         )));
     }
 

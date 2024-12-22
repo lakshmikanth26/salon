@@ -34,6 +34,8 @@ class Welcome extends MY_Controller
         $this->data['chatData'] = $this->db_model->getChartData();
         $this->data['stock'] = $this->db_model->getStockValue();
         $this->data['bs'] = $this->db_model->getBestSeller();
+        $this->data['total_members_count'] = $this->db_model->get_total_members_count();
+        $this->data['expiring_members_count'] = $this->db_model->get_expiring_members_count();
         $lmsdate = date('Y-m-d', strtotime('first day of last month')) . ' 00:00:00';
         $lmedate = date('Y-m-d', strtotime('last day of last month')) . ' 23:59:59';
         $this->data['lmbs'] = $this->db_model->getBestSeller($lmsdate, $lmedate);

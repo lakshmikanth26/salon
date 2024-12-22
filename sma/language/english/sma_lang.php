@@ -432,6 +432,8 @@ $lang['notification_post_at']               = "Notification posted at";
 
 $lang['quick_links']                        = "Quick Links";
 
+$lang['membership_users']                  = "Membership Users";
+
 $lang['date']                               = "Date";
 
 $lang['reference_no']                       = "Reference No";
