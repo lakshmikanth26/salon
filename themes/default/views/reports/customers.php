@@ -1,5 +1,10 @@
 <script>
     $(document).ready(function () {
+        function getQueryParam(param) {
+            let urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
         var oTable = $('#CusData').dataTable({
             "aaSorting": [[0, "asc"], [1, "asc"]],
             "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "<?= lang('all') ?>"]],
@@ -11,6 +16,20 @@
                     "name": "<?= $this->security->get_csrf_token_name() ?>",
                     "value": "<?= $this->security->get_csrf_hash() ?>"
                 });
+                var group = getQueryParam('group');
+                var expiresIn = getQueryParam('expiresIn');
+                if (group) {
+                    aoData.push({
+                        "name": "group",
+                        "value": group
+                    });
+                }
+                if (expiresIn) {
+                    aoData.push({
+                        "name": "expiresIn",
+                        "value": expiresIn
+                    });
+                }
                 $.ajax({'dataType': 'json', 'type': 'POST', 'url': sSource, 'data': aoData, 'success': fnCallback});
             },
             "aoColumns": [null, null, null, null, {

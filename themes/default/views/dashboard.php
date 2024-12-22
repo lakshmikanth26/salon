@@ -73,7 +73,10 @@
     }
 
     .card a:hover {
-        text-decoration: underline;
+        text-decoration: none;
+    }
+    a.no_underline {
+        text-decoration: none;
     }
 </style>
 <script type="text/javascript" src="<?= $assets ?>availability-calendar/scripts/components/jquery.min.js"></script>
@@ -122,22 +125,25 @@ function row_status($x)
                 <div class="box-content">
                     <div class="grid-container">
                         <!-- Total Members Card -->
-                        <div class="card">
-                            <div class="icon blue">
-                                <i class="fa fa-users"></i>
+                        <a class="no_underline" href="<?= site_url('customers?group=member') ?>">
+                            <div class="card">
+                                <div class="icon blue">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <h3>Total Membership Users</h3>
+                                <b><?php echo $total_members_count; ?></b>
                             </div>
-                            <h3>Total Membership Users</h3>
-                            <b><?php echo $total_members_count; ?></b>
-                        </div>
-
+                        </a>
                         <!-- Expiring Memberships Card -->
-                        <div class="card">
-                            <div class="icon orange">
-                                <i class="fa fa-street-view"></i>
+                        <a class="no_underline" href="<?= site_url('customers?group=member&expiresIn=30') ?>">
+                            <div class="card">
+                                <div class="icon orange">
+                                    <i class="fa fa-street-view"></i>
+                                </div>
+                                <h3>Expiring in 30 Days</h3>
+                                <b><?php echo $expiring_members_count; ?></b>
                             </div>
-                            <h3>Expiring in 30 Days</h3>
-                            <b><?php echo $expiring_members_count; ?></b>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>

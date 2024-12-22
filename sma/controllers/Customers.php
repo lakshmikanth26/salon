@@ -36,6 +36,7 @@ class Customers extends MY_Controller
 
         $this->data['error'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('error');
         $this->data['action'] = $action;
+        $this->data['group'] = $this->input->get('group') !== null ? $this->input->get('group') : '';
         $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => '#', 'page' => lang('customers')));
         $meta = array('page_title' => lang('customers'), 'bc' => $bc);
         $this->page_construct('customers/index', $meta, $this->data);
@@ -45,12 +46,40 @@ class Customers extends MY_Controller
     {
         $this->sma->checkPermissions('index');
         $this->load->library('datatables');
+        $group = strtoupper($this->input->post('group'));
+        $expiresIn = $this->input->post('expiresIn');
         $this->datatables
             ->select("id, name, email, phone, customer_group_name, city,award_points")
             ->from("companies")
-            ->where('group_name', 'customer')
-            ->add_column("Actions", "<center><a class=\"tip\" title='" . $this->lang->line("edit_customer") . "' href='" . site_url('customers/edit/$1') . "' data-toggle='modal' data-target='#myModal'><i class=\"fa fa-edit\"></i></a> <a class=\"tip\" title='" . $this->lang->line("list_users") . "' href='" . site_url('customers/users/$1') . "' data-toggle='modal' data-target='#myModal'><i class=\"fa fa-users\"></i></a> <a class=\"tip\" title='" . $this->lang->line("add_user") . "' href='" . site_url('customers/add_user/$1') . "' data-toggle='modal' data-target='#myModal'><i class=\"fa fa-plus-circle\"></i></a> <a href='#' class='tip po' title='<b>" . $this->lang->line("delete_customer") . "</b>' data-content=\"<p>" . lang('r_u_sure') . "</p><a class='btn btn-danger po-delete' href='" . site_url('customers/delete/$1') . "'>" . lang('i_m_sure') . "</a> <button class='btn po-close'>" . lang('no') . "</button>\"  rel='popover'><i class=\"fa fa-trash-o\"></i></a></center>", "id");
-        //->unset_column('id');
+            ->where('group_name', 'customer');
+            if (!empty($group)) {
+                $this->datatables->where('customer_group_name', $group);
+                if (!empty($expiresIn)) {
+                    $today = date('Y-m-d');
+                    $expiryDate = date('Y-m-d', strtotime("$today +$expiresIn days"));
+                    $this->datatables->where('cf2 >=', $today);
+                    $this->datatables->where('cf2 <=', $expiryDate);
+                }
+            }
+            $this->datatables->add_column(
+                "Actions",
+                "<center>
+                    <a class=\"tip\" title='" . $this->lang->line("edit_customer") . "' href='" . site_url('customers/edit/$1') . "' data-toggle='modal' data-target='#myModal'>
+                        <i class=\"fa fa-edit\"></i>
+                    </a>
+                    <a class=\"tip\" title='" . $this->lang->line("list_users") . "' href='" . site_url('customers/users/$1') . "' data-toggle='modal' data-target='#myModal'>
+                        <i class=\"fa fa-users\"></i>
+                    </a>
+                    <a class=\"tip\" title='" . $this->lang->line("add_user") . "' href='" . site_url('customers/add_user/$1') . "' data-toggle='modal' data-target='#myModal'>
+                        <i class=\"fa fa-plus-circle\"></i>
+                    </a>
+                    <a href='#' class='tip po' title='<b>" . $this->lang->line("delete_customer") . "</b>' data-content=\"<p>" . lang('r_u_sure') . "</p><a class='btn btn-danger po-delete' href='" . site_url('customers/delete/$1') . "'>" . lang('i_m_sure') . "</a> <button class='btn po-close'>" . lang('no') . "</button>\" rel='popover'>
+                        <i class=\"fa fa-trash-o\"></i>
+                    </a>
+                </center>",
+                "id"
+            );
+            
         echo $this->datatables->generate();
     }
 
