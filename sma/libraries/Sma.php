@@ -354,9 +354,15 @@ class Sma
 
             $jsd = $this->dateFormats['js_sdate'];
 
+            
             $inv_date = $date[0];
 
-            $time = $date[1];
+            if (isset($date[1])) {
+                $time = $date[1];
+            } else {
+                $time = '00:00:00';
+            }
+            
 
             if ($jsd == 'dd-mm-yyyy' || $jsd == 'dd/mm/yyyy' || $jsd == 'dd.mm.yyyy') {
 

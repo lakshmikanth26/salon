@@ -1205,6 +1205,7 @@ var lang = {unexpected_value: '<?=lang('unexpected_value');?>', select_above: '<
     //var audio_error = new Audio('<?= $assets ?>sounds/sound3.mp3');
     var lang_total = '<?=lang('total');?>', lang_items = '<?=lang('items');?>', lang_discount = '<?=lang('discount');?>', lang_tax2 = '<?=lang('order_tax');?>', lang_total_payable = '<?=lang('total_payable');?>';
     var java_applet = <?=$pos_settings->java_applet?>, order_data = '', bill_data = '';
+    window.customerData = {};
     function widthFunctions(e) {
         var wh = $(window).height(),
             lth = $('#left-top').height(),
@@ -1308,6 +1309,7 @@ var lang = {unexpected_value: '<?=lang('unexpected_value');?>', select_above: '<
                     url: "<?= site_url('customers/getCustomer') ?>/" + $(element).val(),
                     dataType: "json",
                     success: function (data) {
+                        window.customerData = data;
                         var customerGroupName = $("<div>").html(data[0].customer_group_name).text();
                         $("#item-list1").html("<div><p>Name : "+data[0].prefix +" "+ data[0].text+"</p><p>DOB : "+
                         data[0].dob+"</p><p>Anniversary : "+data[0].anniversary+"</p><p>Phone : "+
@@ -1643,6 +1645,7 @@ var lang = {unexpected_value: '<?=lang('unexpected_value');?>', select_above: '<
             autoFocus: false,
             delay: 200,
             response: function (event, ui) {
+                let type = customerData[0].customer_group_name.replace(/<\/?[^>]+(>|$)/g, "").toUpperCase();
                 if ($(this).val().length >= 16 && ui.content[0].id == 0) {
                     //audio_error.play();
                     bootbox.alert('<?= lang('no_match_found') ?>', function () {
@@ -1651,9 +1654,18 @@ var lang = {unexpected_value: '<?=lang('unexpected_value');?>', select_above: '<
                     $(this).val('');
                 }
                 else if (ui.content.length == 1 && ui.content[0].id != 0) {
-                    ui.item = ui.content[0];
-                    $(this).data('ui-autocomplete')._trigger('select', 'autocompleteselect', ui);
-                    $(this).autocomplete('close');
+                    type = type == "MEMBER" ? "MEMBERSHIP" : "NOT"
+                    let membershipType = ui.content[0].row.type.toUpperCase();
+                    if(membershipType==type){
+                        bootbox.alert('<?= lang('membership_exist') ?>', function () {
+                            $('#add_item').focus();
+                        });
+                        $(this).val('');
+                    } else {
+                        ui.item = ui.content[0];
+                        $(this).data('ui-autocomplete')._trigger('select', 'autocompleteselect', ui);
+                        $(this).autocomplete('close');
+                    }
                 }
                 else if (ui.content.length == 1 && ui.content[0].id == 0) {
                     //audio_error.play();
@@ -1666,7 +1678,15 @@ var lang = {unexpected_value: '<?=lang('unexpected_value');?>', select_above: '<
             },
             select: function (event, ui) {
                 event.preventDefault();
-                if (ui.item.id !== 0) {
+                let type = customerData[0].customer_group_name.replace(/<\/?[^>]+(>|$)/g, "").toUpperCase();
+                type = type == "MEMBER" ? "MEMBERSHIP" : "NOT"
+                let membershipType = ui.item.row.type.toUpperCase();
+                if(membershipType==type) {
+                    bootbox.alert('<?= lang('membership_exist') ?>', function () {
+                        $('#add_item').focus();
+                    });
+                    $(this).val('');
+                } else if (ui.item.id !== 0) {
                     var row = add_invoice_item(ui.item);
                     if (row)
                         $(this).val('');

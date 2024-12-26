@@ -155,6 +155,7 @@ $lang['warehouse_stock']                          = "Cantidades en Almacén";
 $lang['product_quantity_alerts']                  = "Alertas de Cantidad de Producto";
 $lang['product_expiry_alerts']                    = "Alertas de Caducidad del producto";
 $lang['products_report']                          = "Informe de Productos";
+$lang['membership_report']                        = "Membership Report";
 $lang['daily_sales']                              = "Ventas diarias";
 $lang['monthly_sales']                            = "Ventas mensuales";
 $lang['sales_report']                             = "Informe de Ventas";

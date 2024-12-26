@@ -282,6 +282,154 @@ class Reports extends MY_Controller
         $this->page_construct('reports/products', $meta, $this->data);
     }
 
+    function membership()
+    {
+        $this->sma->checkPermissions();
+        $this->data['error'] = (validation_errors() ? validation_errors() : $this->session->flashdata('error'));
+        $this->data['categories'] = $this->site->getAllCategories();
+        $this->data['members'] = $this->reports_model->get_members();
+        if ($this->input->post('start_date')) {
+            $dt = "From " . $this->input->post('start_date') . " to " . $this->input->post('end_date');
+        } else {
+            $dt = "Till " . $this->input->post('end_date');
+        }
+        $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => site_url('reports'), 'page' => lang('reports')), array('link' => '#', 'page' => lang('membership_report')));
+        $meta = array('page_title' => lang('membership_report'), 'bc' => $bc);
+        $this->page_construct('reports/membership', $meta, $this->data);
+    }
+
+    function getMembershipReport($pdf = NULL, $xls = NULL)
+    {
+        $this->sma->checkPermissions('membership', TRUE);
+        if ($this->input->post('reset')) {
+            $start_date = NULL;
+            $end_date = NULL;
+        } else {
+            $start_date = $this->input->get('start_date') ? date('Y-m-d', strtotime($this->sma->fld($this->input->get('start_date')))) : NULL;  
+            $end_date = $this->input->get('end_date') ? date('Y-m-d', strtotime($this->sma->fld($this->input->get('end_date')))) : NULL;
+        }
+        if ($pdf || $xls) {
+            // $this->db
+            //     ->select("id, name, cf1 as start_date, cf2 as end_date, phone, email, customer_group_name, company")
+            //     ->from('companies')
+            //     ->where("customer_group_name", "MEMBER");
+
+                $this->db->select(
+                    $this->db->dbprefix('sale_items') . ".sale_id, " .
+                    $this->db->dbprefix('sale_items') . ".product_id, " .
+                    $this->db->dbprefix('sale_items') . ".product_name, " .
+                    $this->db->dbprefix('sale_items') . ".product_type, " .
+                    $this->db->dbprefix('sales') . ".customer_id, " .
+                    $this->db->dbprefix('sales') . ".date, " .
+                    $this->db->dbprefix('companies') . ".name AS customer_name, " .
+                    $this->db->dbprefix('companies') . ".email, " .
+                    $this->db->dbprefix('companies') . ".phone, " .
+                    $this->db->dbprefix('companies') . ".cf1 AS start_date, " .
+                    $this->db->dbprefix('companies') . ".cf2 AS end_date",
+                    FALSE
+                )
+                ->from('sale_items')
+                ->join('sales', 'sales.id = sale_items.sale_id', 'left')
+                ->join('companies', 'companies.id = sales.customer_id', 'left')
+                ->where('sale_items.product_type', 'membership')
+                ->where('companies.customer_group_name', 'MEMBER');
+            if ($start_date && $end_date) {
+                $this->db->where("cf1 >=", $start_date);
+                $this->db->where("cf1 <=", $end_date);
+            }
+
+            $q = $this->db->get();
+            if ($q->num_rows() > 0) {
+                $data = $q->result();
+            } else {
+                $data = NULL;
+            }
+
+            if (!empty($data)) {
+                $this->load->library('excel');
+                $this->excel->setActiveSheetIndex(0);
+                $this->excel->getActiveSheet()->setTitle(lang('membership_report'));
+                $this->excel->getActiveSheet()->SetCellValue('A1', 'Sale Id');
+                $this->excel->getActiveSheet()->SetCellValue('B1', 'Sale Date');
+                $this->excel->getActiveSheet()->SetCellValue('C1', 'Customer Name');
+                $this->excel->getActiveSheet()->SetCellValue('D1', 'Phone');
+                $this->excel->getActiveSheet()->SetCellValue('E1', 'Member Plan');
+                $this->excel->getActiveSheet()->SetCellValue('F1', 'Validity');
+
+                $row = 2;
+                foreach ($data as $data_row) {
+                    $this->excel->getActiveSheet()->SetCellValue('A' . $row, $data_row->sale_id);
+                    $this->excel->getActiveSheet()->SetCellValue('B' . $row, $data_row->date);
+                    $this->excel->getActiveSheet()->SetCellValue('C' . $row, $data_row->customer_name);
+                    $this->excel->getActiveSheet()->SetCellValue('D' . $row, $data_row->phone);
+                    $this->excel->getActiveSheet()->SetCellValue('E' . $row, $data_row->product_name);
+                    $this->excel->getActiveSheet()->SetCellValue('F' . $row, $data_row->email);
+                    $this->excel->getActiveSheet()->SetCellValue('G' . $row, $data_row->end_date);
+                    $row++;
+                }
+
+                $this->excel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
+                $this->excel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
+                $this->excel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
+                $this->excel->getActiveSheet()->getColumnDimension('D')->setWidth(15);
+                $this->excel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
+                $this->excel->getActiveSheet()->getColumnDimension('F')->setWidth(25);
+                $this->excel->getActiveSheet()->getColumnDimension('G')->setWidth(20);
+
+                $filename = 'membership_report';
+                if ($pdf) {
+                    // PDF generation logic
+                }
+                if ($xls) {
+                    header('Content-Type: application/vnd.ms-excel');
+                    header('Content-Disposition: attachment;filename="' . $filename . '.xls"');
+                    header('Cache-Control: max-age=0');
+                    $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+                    $objWriter->save('php://output');
+                    exit();
+                }
+            }
+
+            $this->session->set_flashdata('error', lang('nothing_found'));
+            redirect($_SERVER["HTTP_REFERER"]);
+        } else {
+            $this->load->library('datatables');
+            $this->datatables
+                ->select(
+                    $this->db->dbprefix('sale_items') . ".sale_id, " .
+                    $this->db->dbprefix('sales') . ".date, " .
+                    $this->db->dbprefix('companies') . ".name AS customer_name, " .
+                    $this->db->dbprefix('companies') . ".phone, " .
+                    $this->db->dbprefix('sale_items') . ".product_name, " .
+                    $this->db->dbprefix('companies') . ".cf2 AS end_date, " .
+                    $this->db->dbprefix('sale_items') . ".product_id, " .
+                    $this->db->dbprefix('sale_items') . ".product_type, " .
+                    $this->db->dbprefix('sales') . ".customer_id, " .
+                    $this->db->dbprefix('companies') . ".email, " .
+                    $this->db->dbprefix('companies') . ".cf1 AS start_date, " ,
+                    FALSE
+                )
+                ->from("sale_items")
+                ->join("sales", "sales.id = sale_items.sale_id", "left")
+                ->join('companies',"companies.id = sales.customer_id", "left") 
+                ->where("sale_items.product_type", "membership");
+                if ($start_date && $end_date) {
+                    $this->datatables->where("DATE(date) >=", $start_date);
+                    $this->datatables->where("DATE(date) <=", $end_date);
+                } else if ($start_date || $end_date) {
+                    if ($start_date) {
+                        $this->datatables->where("DATE(date) =", $start_date);
+                    }
+                    if ($end_date) {
+                        $this->datatables->where("DATE(date) =", $end_date);
+                    }
+                }
+
+            echo $this->datatables->generate();
+        }
+    }
+
+
     function getProductsReport($pdf = NULL, $xls = NULL)
     {
         $this->sma->checkPermissions('products', TRUE);

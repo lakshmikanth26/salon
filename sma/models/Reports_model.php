@@ -23,6 +23,11 @@ class Reports_model extends CI_Model
         return FALSE;
     }
 
+    public function get_members() {
+        $query = $this->db->get('companies');
+        return $query->result_array();
+    }
+    
     public function getStaff()
     {
         if ($this->Admin) {

@@ -404,6 +404,8 @@ $lang['product_expiry_alerts']              = "Product Expiry Alerts";
 
 $lang['products_report']                    = "Products Report";
 
+$lang['membership_report']                  = "Membership Report";
+
 $lang['daily_sales']                        = "Daily Sales";
 
 $lang['monthly_sales']                      = "Monthly Sales";
@@ -647,6 +649,8 @@ $lang['items']                              = "Items";
 $lang['au_pr_name_tip']                     = "Please start typing code/name for suggestions or just scan barcode";
 
 $lang['no_match_found']                     = "No matching result found! Product might be out of stock in the selected warehouse.";
+
+$lang['membership_exist']           = "The customer is already a member. Membership cannot be added again.";
 
 $lang['csv_file']                           = "CSV File";
 

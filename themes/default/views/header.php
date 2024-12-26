@@ -1112,6 +1112,13 @@
                                                 class="fa fa-barcode"></i><span
 
                                                 class="text"> <?= lang('products_report'); ?></span></a></li>
+                                    
+                                    <li id="reports_membership"><a href="<?= site_url('reports/membership') ?>"><i
+
+                                                class="fa fa-medium"></i><span
+
+                                                class="text"> <?= lang('membership_report'); ?></span></a></li>
+                                                
 
                                     <li id="reports_categories"><a href="<?= site_url('reports/categories') ?>"><i
 

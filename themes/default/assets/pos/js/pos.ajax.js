@@ -482,6 +482,7 @@ if (poswarehouse = localStorage.getItem('poswarehouse')) {
                     url: site.base_url+'customers/getCustomer/' + $(this).val(),
                     dataType: "json",
                     success: function (data) {
+						window.customerData = data;
 						var customerGroupName = $("<div>").html(data[0].customer_group_name).text();
                         $("#item-list1").html("<div><p>Name : "+data[0].prefix +" "+ data[0].text+"</p><p>DOB : "+
 						data[0].dob+"</p><p>Anniversary : "+data[0].anniversary+"</p><p>Phone : "+
