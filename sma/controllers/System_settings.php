@@ -818,6 +818,29 @@ class system_settings extends MY_Controller
         }
     }
 
+    function coupons()
+    {
+
+        $this->data['error'] = validation_errors() ? validation_errors() : $this->session->flashdata('error');
+
+        $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => site_url('system_settings'), 'page' => lang('system_settings')), array('link' => '#', 'page' => lang('coupons')));
+        $meta = array('page_title' => lang('coupons'), 'bc' => $bc);
+        $this->page_construct('settings/coupons', $meta, $this->data);
+    }
+
+    function getCoupons()
+    {
+
+        $this->load->library('datatables');
+        $this->datatables
+            ->select("id, name, price, value, count, start_date, expiry_date, valid_upto")
+            ->from("coupons")
+            ->add_column("Actions", "<center><a href='" . site_url('system_settings/edit_coupon/$1') . "' class='tip' title='" . lang("edit_coupon") . "' data-toggle='modal' data-target='#myModal'><i class=\"fa fa-edit\"></i></a> <a href='#' class='tip po' title='<b>" . lang("delete_coupon") . "</b>' data-content=\"<p>" . lang('r_u_sure') . "</p><a class='btn btn-danger po-delete' href='" . site_url('system_settings/delete_coupon/$1') . "'>" . lang('i_m_sure') . "</a> <button class='btn po-close'>" . lang('no') . "</button>\"  rel='popover'><i class=\"fa fa-trash-o\"></i></a></center>", "id");
+        //->unset_column('id');
+
+        echo $this->datatables->generate();
+    }
+
     function currencies()
     {
 
@@ -839,6 +862,213 @@ class system_settings extends MY_Controller
         //->unset_column('id');
 
         echo $this->datatables->generate();
+    }  
+
+    function coupon_actions()
+    {
+
+        $this->form_validation->set_rules('form_action', lang("form_action"), 'required');
+
+        if ($this->form_validation->run() == true) {
+
+            if (!empty($_POST['val'])) {
+                if ($this->input->post('form_action') == 'delete') {
+                    foreach ($_POST['val'] as $id) {
+                        $this->settings_model->deleteCoupon($id);
+                    }
+                    $this->session->set_flashdata('message', lang("coupons_deleted"));
+                    redirect($_SERVER["HTTP_REFERER"]);
+                }
+
+                if ($this->input->post('form_action') == 'export_excel' || $this->input->post('form_action') == 'export_pdf') {
+
+                    $this->load->library('excel');
+                    $this->excel->setActiveSheetIndex(0);
+                    $this->excel->getActiveSheet()->setTitle(lang('coupons'));
+                    $this->excel->getActiveSheet()->SetCellValue('A1', lang('name'));
+                    $this->excel->getActiveSheet()->SetCellValue('B1', lang('price'));
+                    $this->excel->getActiveSheet()->SetCellValue('C1', lang('value'));
+                    $this->excel->getActiveSheet()->SetCellValue('D1', lang('count'));
+                    $this->excel->getActiveSheet()->SetCellValue('E1', lang('start_date'));
+                    $this->excel->getActiveSheet()->SetCellValue('F1', lang('expiry_date'));
+                    $this->excel->getActiveSheet()->SetCellValue('G1', lang('Valid_Upto'));
+
+
+                    $row = 2;
+                    foreach ($_POST['val'] as $id) {
+                        $sc = $this->settings_model->getCouponByID($id);
+                        $this->excel->getActiveSheet()->SetCellValue('A' . $row, $sc->name);
+                        $this->excel->getActiveSheet()->SetCellValue('B' . $row, $sc->price);
+                        $this->excel->getActiveSheet()->SetCellValue('C' . $row, $sc->value);
+                        $this->excel->getActiveSheet()->SetCellValue('D' . $row, $sc->count);
+                        $this->excel->getActiveSheet()->SetCellValue('E' . $row, $sc->start_date);
+                        $this->excel->getActiveSheet()->SetCellValue('F' . $row, $sc->expiry_date);
+                        $this->excel->getActiveSheet()->SetCellValue('G' . $row, $sc->valid_upto);
+                        $row++;
+                    }
+
+                    $this->excel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
+                    $this->excel->getDefaultStyle()->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                    $filename = 'coupons_' . date('Y_m_d_H_i_s');
+                    if ($this->input->post('form_action') == 'export_pdf') {
+                        $styleArray = array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN)));
+                        $this->excel->getDefaultStyle()->applyFromArray($styleArray);
+                        $this->excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+                        require_once(APPPATH . "third_party" . DIRECTORY_SEPARATOR . "MPDF" . DIRECTORY_SEPARATOR . "mpdf.php");
+                        $rendererName = PHPExcel_Settings::PDF_RENDERER_MPDF;
+                        $rendererLibrary = 'MPDF';
+                        $rendererLibraryPath = APPPATH . 'third_party' . DIRECTORY_SEPARATOR . $rendererLibrary;
+                        if (!PHPExcel_Settings::setPdfRenderer($rendererName, $rendererLibraryPath)) {
+                            die('Please set the $rendererName: ' . $rendererName . ' and $rendererLibraryPath: ' . $rendererLibraryPath . ' values' .
+                                PHP_EOL . ' as appropriate for your directory structure');
+                        }
+
+                        header('Content-Type: application/pdf');
+                        header('Content-Disposition: attachment;filename="' . $filename . '.pdf"');
+                        header('Cache-Control: max-age=0');
+
+                        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'PDF');
+                        return $objWriter->save('php://output');
+                    }
+                    if ($this->input->post('form_action') == 'export_excel') {
+                        header('Content-Type: application/vnd.ms-excel');
+                        header('Content-Disposition: attachment;filename="' . $filename . '.xls"');
+                        header('Cache-Control: max-age=0');
+
+                        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+                        return $objWriter->save('php://output');
+                    }
+
+                    redirect($_SERVER["HTTP_REFERER"]);
+                }
+            } else {
+                $this->session->set_flashdata('error', lang("no_coupons_selected"));
+                redirect($_SERVER["HTTP_REFERER"]);
+            }
+        } else {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect($_SERVER["HTTP_REFERER"]);
+        }
+    }
+
+    public function validate_date($date)
+    {
+        try {
+            // Attempt to parse the date into a standard format (YYYY-MM-DD)
+            $formattedDate = DateTime::createFromFormat('Y-m-d', $date) 
+                            ?: DateTime::createFromFormat('d/m/Y', $date) 
+                            ?: DateTime::createFromFormat('m-d-Y', $date);
+            
+            if ($formattedDate) {
+                // Reformat to 'YYYY-MM-DD' for consistency
+                $formattedDateString = $formattedDate->format('Y-m-d');
+
+                // Validate the reformatted date using 'checkdate'
+                list($year, $month, $day) = explode('-', $formattedDateString);
+                if (checkdate($month, $day, $year)) {
+                    return true; // Valid date
+                }
+            }
+
+            // Set an error message if the date is invalid
+            $this->form_validation->set_message('validate_date', lang("The {field} is not a valid date."));
+            return false;
+        } catch (Exception $e) {
+            // Handle unexpected exceptions (e.g., invalid formats)
+            $this->form_validation->set_message('validate_date', lang("The {field} must be in a valid date format."));
+            return false;
+        }
+    }
+
+
+
+    function add_coupons() {
+        $this->form_validation->set_rules('name', lang("name"), 'trim|is_unique[coupons.name]|required');
+        $this->form_validation->set_rules('price', lang("price"), 'required|numeric');
+        $this->form_validation->set_rules('value', lang("value"), 'required|numeric');
+        $this->form_validation->set_rules('count', lang("count"), 'required|numeric');
+        $this->form_validation->set_rules('start_date', lang("start_date"), 'required|callback_validate_date');
+        $this->form_validation->set_rules('expiry_date', lang("expiry_date"), 'required|callback_validate_date');
+
+        if ($this->form_validation->run() == true) {
+            $data = array(
+                'name'        => $this->input->post('name'),
+                'price'       => $this->input->post('price'),
+                'value'       => $this->input->post('value'),
+                'count'       => $this->input->post('count'),
+                'start_date'  => $this->reformat_date($this->input->post('start_date')),
+                'expiry_date' => $this->reformat_date($this->input->post('expiry_date')),
+                'valid_upto'  => $this->reformat_date($this->input->post('validity')),
+            );
+        } elseif ($this->input->post('add_coupon')) {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect("system_settings/coupons");
+        }
+
+        if ($this->form_validation->run() == true && $this->settings_model->addCoupon($data)) {
+            $this->session->set_flashdata('message', lang("coupon_added"));
+            redirect("system_settings/coupons");
+        } else {
+            $this->data['error'] = (validation_errors() ? validation_errors() : $this->session->flashdata('error'));
+            $this->data['modal_js'] = $this->site->modal_js();
+            $this->data['page_title'] = lang("new_coupon");
+            $this->load->view($this->theme . 'settings/add_coupons', $this->data);
+        }
+    }
+
+    function edit_coupon($id = NULL)
+    {
+        $coupon = $this->settings_model->getCouponByID($id);
+        $this->form_validation->set_rules('name', lang("name"), 'required');
+        $this->form_validation->set_rules('price', lang("price"), 'required|numeric');
+        $this->form_validation->set_rules('value', lang("value"), 'required|numeric');
+        $this->form_validation->set_rules('count', lang("count"), 'required|numeric');
+        $this->form_validation->set_rules('start_date', lang("start_date"), 'required|callback_validate_date');
+        $this->form_validation->set_rules('expiry_date', lang("expiry_date"), 'required|callback_validate_date');
+
+        if ($this->form_validation->run() == true) {
+
+            $data = array(
+                'name'        => $this->input->post('name'),
+                'price'       => $this->input->post('price'),
+                'value'       => $this->input->post('value'),
+                'count'       => $this->input->post('count'),
+                'start_date'  => $this->reformat_date($this->input->post('start_date')),
+                'expiry_date' => $this->reformat_date($this->input->post('expiry_date')),
+                'valid_upto'  => $this->reformat_date($this->input->post('validity')),
+            );
+        } elseif ($this->input->post('edit_coupon')) {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect("system_settings/coupons");
+        }
+
+        if ($this->form_validation->run() == true && $this->settings_model->updateCoupon($id, $data)) { //check to see if we are updateing the customer
+            $this->session->set_flashdata('message', lang("coupon_updated"));
+            redirect("system_settings/coupons");
+        } else {
+            $this->data['error'] = (validation_errors() ? validation_errors() : $this->session->flashdata('error'));
+            $this->data['coupon'] = $coupon;
+            $this->data['id'] = $id;
+            $this->data['modal_js'] = $this->site->modal_js();
+            $this->load->view($this->theme . 'settings/edit_coupon', $this->data);
+        }
+    }
+
+    function delete_coupon($id = NULL)
+    {
+
+        if ($this->settings_model->deleteCoupon($id)) {
+            echo lang("coupon_deleted");
+        }
+    }
+
+    private function reformat_date($date)
+    {
+        $formattedDate = DateTime::createFromFormat('Y-m-d', $date) 
+                        ?: DateTime::createFromFormat('d/m/Y', $date) 
+                        ?: DateTime::createFromFormat('m-d-Y', $date);
+
+        return $formattedDate ? $formattedDate->format('Y-m-d') : null;
     }
 
     function add_currency()

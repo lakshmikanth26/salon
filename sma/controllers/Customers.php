@@ -83,6 +83,14 @@ class Customers extends MY_Controller
         echo $this->datatables->generate();
     }
 
+    function getNewCustomerCount() {
+        $startDate = $this->input->get('startDate');
+        $endDate = $this->input->get('endDate');
+        $count = $this->companies_model->get_new_customer_count($startDate, $endDate);
+        $response = array('count' => $count);
+        $this->output->set_content_type('application/json')->set_output(json_encode($response));
+    }
+
     function getCustomerCount() {
         $maleCount = $this->companies_model->getGenderCount('male');
         $femaleCount = $this->companies_model->getGenderCount('female');

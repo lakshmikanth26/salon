@@ -2166,7 +2166,11 @@ class Reports extends MY_Controller
     {
         $this->sma->checkPermissions('customers');
         $this->data['error'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('error');
-
+        if ($this->input->post('start_date')) {
+            $dt = "From " . $this->input->post('start_date') . " to " . $this->input->post('end_date');
+        } else {
+            $dt = "Till " . $this->input->post('end_date');
+        }
         $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => site_url('reports'), 'page' => lang('reports')), array('link' => '#', 'page' => lang('customers_report')));
         $meta = array('page_title' => lang('customers_report'), 'bc' => $bc);
         $this->page_construct('reports/customers', $meta, $this->data);
@@ -2175,7 +2179,13 @@ class Reports extends MY_Controller
     function getCustomers($pdf = NULL, $xls = NULL)
     {
         $this->sma->checkPermissions('customers', TRUE);
-
+        if ($this->input->post('reset')) {
+            $start_date = NULL;
+            $end_date = NULL;
+        } else {
+            $start_date = $this->input->get('start_date') ? date('Y-m-d', strtotime($this->sma->fld($this->input->get('start_date')))) : NULL;  
+            $end_date = $this->input->get('end_date') ? date('Y-m-d', strtotime($this->sma->fld($this->input->get('end_date')))) : NULL;
+        }
         if ($pdf || $xls) {
 
             $this->db
@@ -2186,6 +2196,17 @@ class Reports extends MY_Controller
                 ->order_by('companies.company asc')
                 ->group_by('companies.id');
 
+                if ($start_date && $end_date) {
+                    $this->db->where("DATE(date) >=", $start_date);
+                    $this->db->where("DATE(date) <=", $end_date);
+                } else if ($start_date || $end_date) {
+                    if ($start_date) {
+                        $this->db->where("DATE(date) =", $start_date);
+                    }
+                    if ($end_date) {
+                        $this->db->where("DATE(date) =", $end_date);
+                    }
+                }
             $q = $this->db->get();
             if ($q->num_rows() > 0) {
                 foreach (($q->result()) as $row) {
@@ -2284,6 +2305,17 @@ class Reports extends MY_Controller
                 ->group_by('companies.id')
                 ->add_column("Actions", "<div class='text-center'><a class=\"tip\" title='" . lang("view_report") . "' href='" . site_url('reports/customer_report/$1') . "'><span class='label label-primary'>" . lang("view_report") . "</span></a></div>", "id")
                 ->unset_column('id');
+                if ($start_date && $end_date) {
+                    $this->datatables->where("DATE(sma_sales.date) >=", $start_date);
+                    $this->datatables->where("DATE(sma_sales.date) <=", $end_date);
+                } else if ($start_date || $end_date) {
+                    if ($start_date) {
+                        $this->datatables->where("DATE(sma_sales.date) =", $start_date);
+                    }
+                    if ($end_date) {
+                        $this->datatables->where("DATE(sma_sales.date) =", $end_date);
+                    }
+                }
             echo $this->datatables->generate();
 
         }

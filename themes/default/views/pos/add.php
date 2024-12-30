@@ -1098,22 +1098,26 @@
                 <h4 class="modal-title" id="couponModalLabel"><?= lang('edit_coupon'); ?></h4>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <?= lang("coupon", "coupon_input"); ?>
+            <div class="form-group">
+                <?= lang("coupon", "coupon_input"); ?>
+                <?php if (isset($coupons) && !empty($coupons)) : ?>
                     <?php
-                    $cis[""] = "";
+                    $cis = [""]; // Initialize with an empty option
                     foreach ($coupons as $coupon) {
                         $cis[$coupon->id] = $coupon->name;
                     }
                     echo form_dropdown('coupon_id', $cis, "", 'id="coupon_id" class="form-control pos-input-tip" style="width:100%;"');
                     ?>
-                </div>
-
+                <?php else : ?>
+                    <p>No coupons found.</p>
+                <?php endif; ?>
+            </div>
+            <?php if (isset($coupons) && !empty($coupons)) : ?>
                 <div class="form-group">
                     <?= lang("coupon_input", "coupon_input"); ?>
                     <?php echo form_input('coupon_input', '', 'class="form-control kb-pad" id="coupon_input"'); ?>
                 </div>
-
+            <?php endif; ?>
             </div>
             <div class="modal-footer">
                 <button type="button" id="updateCoupon" class="btn btn-primary"><?= lang('update') ?></button>

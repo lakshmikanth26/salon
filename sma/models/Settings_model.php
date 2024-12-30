@@ -291,9 +291,36 @@ class Settings_model extends CI_Model
         return FALSE;
     }
 
+
     public function addCurrency($data)
     {
         if ($this->db->insert("currencies", $data)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function addCoupon($data)
+    {
+        if ($this->db->insert("coupons", $data)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getCouponByID($id)
+    {
+        $q = $this->db->get_where('coupons', array('id' => $id), 1);
+        if ($q->num_rows() > 0) {
+            return $q->row();
+        }
+        return FALSE;
+    }
+
+    public function updateCoupon($id, $data = array())
+    {
+        $this->db->where('id', $id);
+        if ($this->db->update("coupons", $data)) {
             return true;
         }
         return false;
@@ -306,6 +333,14 @@ class Settings_model extends CI_Model
             return true;
         }
         return false;
+    }
+
+    public function deleteCoupon($id)
+    {
+        if ($this->db->delete("coupons", array('id' => $id))) {
+            return true;
+        }
+        return FALSE;
     }
 
     public function deleteCurrency($id)

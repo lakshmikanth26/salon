@@ -1,4 +1,18 @@
+<?php
+$v = "";
+if ($this->input->post('start_date')) {
+    $v .= "&start_date=" . $this->input->post('start_date');
+}
+if ($this->input->post('end_date')) {
+    $v .= "&end_date=" . $this->input->post('end_date');
+}
+?>
 <script>
+    function reloadPage() {
+            document.getElementById('start_date').value = '';
+            document.getElementById('end_date').value = '';
+            window.location.reload();
+        }
     $(document).ready(function () {
         function getQueryParam(param) {
             let urlParams = new URLSearchParams(window.location.search);
@@ -10,7 +24,7 @@
             "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "<?= lang('all') ?>"]],
             "iDisplayLength": <?= $Settings->rows_per_page ?>,
             'bProcessing': true, 'bServerSide': true,
-            'sAjaxSource': '<?= site_url('reports/getCustomers') ?>',
+            'sAjaxSource': '<?= site_url('reports/getCustomers/?v=1'.$v) ?>',
             'fnServerData': function (sSource, aoData, fnCallback) {
                 aoData.push({
                     "name": "<?= $this->security->get_csrf_token_name() ?>",
@@ -67,6 +81,31 @@
             <div class="col-lg-12">
 
                 <p class="introtext"><?= lang('view_report_customer'); ?></p>
+                <div id="form">
+                    <?php echo form_open("reports/customers"); ?>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <?= lang("Sales_Start_Date", "start_date"); ?>
+                                <?php echo form_input('start_date', (isset($_POST['start_date']) ? $_POST['start_date'] : ""), 'class="form-control date" id="start_date"'); ?>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <?= lang("Sales_End_Date", "end_date"); ?>
+                                <?php echo form_input('end_date', (isset($_POST['end_date']) ? $_POST['end_date'] : ""), 'class="form-control date" id="end_date"'); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top:49px;display:flex;gap:8px;">
+                        <div class="controls">
+                            <?php echo form_submit('submit_report', lang("submit"), 'class="btn btn-primary"'); ?> 
+                        </div>
+                        <div class="controls">
+                            <button class="btn btn-danger" onclick="reloadPage()">Reset</button>
+                        </div>
+                    </div>
+                    <?php echo form_close(); ?>
+                </div>
 
                 <div class="table-responsive">
                     <table id="CusData" cellpadding="0" cellspacing="0" border="0"

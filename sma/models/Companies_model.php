@@ -85,6 +85,31 @@ class Companies_model extends CI_Model
         return FALSE;
     }
 
+    public function get_new_customer_count($startDate = null, $endDate = null) {
+        $this->db->select('COUNT(*) as count');
+        $this->db->from('companies');
+        
+        // If start date is provided, add the time part to ensure the query includes the full day
+        if (!empty($startDate) && !empty($endDate)) {
+            $startDateTime = $startDate . ' 00:00:00';
+            $endDateTime = $endDate . ' 23:59:59';
+            $this->db->where('created_at >=', $startDateTime);
+            $this->db->where('created_at <=', $endDateTime);
+        } else if (!empty($startDate)) {
+            $this->db->where('DATE(created_at) =', $startDate);
+        } else if (!empty($endDate)) {
+            $this->db->where('DATE(created_at) =', $endDate);
+        }
+    
+        // Execute the query
+        $query = $this->db->get();
+        $result = $query->row_array();
+    
+        // Return the customer count or 0 if no result found
+        return !empty($result['count']) ? (int) $result['count'] : 0;
+    }
+    
+
     public function getCompanyByID($id)
     {
         $q = $this->db->get_where('companies', array('id' => $id), 1);

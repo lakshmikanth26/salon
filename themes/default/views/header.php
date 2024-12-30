@@ -921,6 +921,18 @@
 
                                                     class="text"> <?= lang('system_settings'); ?></span></a></li>
 
+                                        <li id="system_settings_coupons"><a href="<?= site_url('system_settings/coupons') ?>"><i
+
+                                            class="fa fa-btc"></i><span
+
+                                            class="text"> <?= lang('Coupons'); ?></span></a></li>
+
+                                        <li id="discounts"><a href="<?= site_url('discounts') ?>"><i
+
+                                            class="fa fa-gift"></i><span
+
+                                            class="text"> <?= lang('Discounts'); ?></span></a></li>
+
                                         <?php if (POS) { ?>
 
                                             <li id="pos_settings"><a href="<?= site_url('pos/settings') ?>"><i

@@ -1,16 +1,83 @@
+<style>
+.card {
+        cursor: pointer;
+        background: #a2cbe375;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        /* height: 150px;
+        width: 250px; */
+    }
+    .table {
+        width: 100%;
+        background-color: #f8f9fa;
+        table-layout: fixed;
+    }
+    .table th, .table td {
+        vertical-align: middle;
+        text-align: center;
+        width: 33.33%;
+    }
+</style>
 <script>
     $(document).ready(function () {
+        var today = new Date().toISOString().split('T')[0];
+        fetchCustomerCount(today, today);
+
+        // Function to fetch customer count based on date filters
+        function fetchCustomerCount(startDate, endDate) {
+
+            if (startDate.trim() === today.trim() && endDate === today.trim()) {
+                $('#totalCustomerText').text('Total New Customers Today');
+            } else {
+                if (startDate.trim() && endDate.trim()) {
+                    $('#totalCustomerText').html(`Total New Customers from <div><strong>${startDate}</strong> to <strong>${endDate}</strong></div>`);
+                } else {
+                    $('#totalCustomerText').html(`Total New Customers on <div><strong>${startDate ? startDate : endDate}</strong></div>`);
+                }
+            }
+
+            $.get('customers/getNewCustomerCount', { startDate: startDate, endDate: endDate }, function (data) {
+                $('#newCustomerCount').text(data.count);
+                if (startDate && endDate) {
+                    $('#filterDates').text(`From ${startDate} to ${endDate}`);
+                } else {
+                    $('#filterDates').text('None');
+                }
+            });
+        }
+
+        // Apply filters when the button is clicked
+        $('#filterCustomers').click(function (event) {
+            event.preventDefault();
+            var startDate = $('#startDate').val();
+            var endDate = $('#endDate').val();
+            fetchCustomerCount(startDate, endDate);
+        });
+
+        // Reset filters when the reset button is clicked
+        $('#resetFilters').click(function () {
+            event.preventDefault();
+            $('#startDate').val('');
+            $('#endDate').val('');
+            fetchCustomerCount(new Date().toISOString().split('T')[0], new Date().toISOString().split('T')[0]);
+        });
+
         function getQueryParam(param) {
             let urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
         
         $.get('customers/getCustomerCount', function(data) {
-            $('#maleCountElement').text(data.maleCount);
-            $('#femaleCountElement').text(data.femaleCount);
-            $('#memberCountElement').text(data.memberCount);
-            $('#nonMemberCountElement').text(data.nonMemberCount);
-            $('#totalCount').text(data.totalRecords);
+            $('#maleCountElement').html('<strong>' + data.maleCount + '</strong>');
+            $('#femaleCountElement').html('<strong>' + data.femaleCount + '</strong>');
+            $('#memberCountElement').html('<strong>' + data.memberCount + '</strong>');
+            $('#nonMemberCountElement').html('<strong>' + data.nonMemberCount + '</strong>');
+            $('#totalCount').html('<strong>' + data.totalRecords + '</strong>');
         });
 
         var oTable = $('#CusData').dataTable({
@@ -58,6 +125,7 @@
     echo form_open('customers/customer_actions', 'id="action-form"');
 } ?>
 <div class="box">
+    
     <div class="box-header">
         <h2 class="blue"><i class="fa-fw fa fa-users"></i><?= lang('customers'); ?></h2>
 
@@ -96,16 +164,69 @@
                 <table class="table">
                     <thead class="thead-light">
                         <tr>
-                        <th scope="col">Total Male Customers : <span id="maleCountElement"></span></th>
-                        <th scope="col">Total Female Customers : <span id="femaleCountElement"></span></th>
-                        <th scope="col">Total Member Customers : <span id="memberCountElement"></span></th>
-                        <th scope="col">Total Non-Member Customers : <span id="nonMemberCountElement"></span></th>
-                        <th scope="col">Total Customers : <span id="totalCount"></span></th>
+                        <th scope="col">Total Male Customers </th>
+                        <th scope="col">Total Female Customers </th>
+                        <th scope="col">Total Member Customers </th>
+                        <th scope="col">Total Non-Member Customers </th>
+                        <th scope="col">Total Customers </th>
+                        </tr>
+                        <tr style="border: 1px solid #e8e8e9;">
+                            <td style="font-size: large;" id="maleCountElement"></td>
+                            <td style="font-size: large;" id="femaleCountElement"></td>
+                            <td style="font-size: large;" id="memberCountElement"></td>
+                            <td style="font-size: large;" id="nonMemberCountElement"></td>
+                            <td style="font-size: large;" id="totalCount"></td>
                         </tr>
                     </thead>
                 </table>
                 <p class="introtext" style="margin-top: -20px; margin-bottom: 20px; margin-left: 0px; margin-right: 0px;"><?= lang('list_results'); ?></p>
                 
+                <div class="container mt-4">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Total New Customers</th>
+                                <th>Created Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <!-- Total New Customers Section -->
+                                <td>
+                                    <div class="card">
+                                        <div class="icon blue">
+                                            <i class="fa fa-users"></i>
+                                        </div>
+                                        <h3 id="totalCustomerText">Total New Customers</h3>
+                                        <b style="font-size: large;">
+                                            <p id="newCustomerCount">0</p>
+                                        </b>
+                                    </div>
+                                </td>
+
+                                <!-- Filters Section -->
+                                <td>
+                                    <div class="form-group">
+                                        <label for="startDate">From</label>
+                                        <input type="date" id="startDate" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="endDate">To</label>
+                                        <input type="date" id="endDate" class="form-control">
+                                    </div>
+                                </td>
+
+                                <!-- Actions Section -->
+                                <td>
+                                    <button id="filterCustomers" class="btn btn-primary mb-2">Filter</button>
+                                    <button id="resetFilters" class="btn btn-danger">Reset</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <div class="table-responsive">
                     <table id="CusData" class="table table-bordered table-hover table-striped">
                         <thead>
