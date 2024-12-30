@@ -47,7 +47,7 @@
                                     class="fa fa-file-pdf-o"></i> <?= lang('export_to_pdf') ?></a></li>
                         <li class="divider"></li>
                         <li><a href="#" id="delete" data-action="delete"><i
-                                    class="fa fa-trash-o"></i> <?= lang('delete_currencies') ?></a></li>
+                                    class="fa fa-trash-o"></i> <?= lang('Delete_Coupons') ?></a></li>
                     </ul>
                 </li>
             </ul>

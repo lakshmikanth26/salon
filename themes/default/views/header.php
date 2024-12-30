@@ -927,7 +927,7 @@
 
                                             class="text"> <?= lang('Coupons'); ?></span></a></li>
 
-                                        <li id="discounts"><a href="<?= site_url('discounts') ?>"><i
+                                        <li id="system_settings_discounts"><a href="<?= site_url('system_settings/discounts') ?>"><i
 
                                             class="fa fa-gift"></i><span
 

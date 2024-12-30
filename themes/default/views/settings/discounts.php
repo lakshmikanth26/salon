@@ -1,11 +1,7 @@
 <script>
     $(document).ready(function () {
-        function discount_type(x) {
-            return (x == 1) ? "<?=lang('percentage')?>" : "<?=lang('fixed')?>";
-        }
-
         $('#CURData').dataTable({
-            "aaSorting": [[2, "asc"]],
+            "aaSorting": [[1, "asc"]],
             "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "<?= lang('all') ?>"]],
             "iDisplayLength": <?= $Settings->rows_per_page ?>,
             'bProcessing': true, 'bServerSide': true,
@@ -17,17 +13,24 @@
                 });
                 $.ajax({'dataType': 'json', 'type': 'POST', 'url': sSource, 'data': aoData, 'success': fnCallback});
             },
-            "aoColumns": [{
-                "bSortable": false,
-                "mRender": checkbox
-            }, null, null, {"mRender": discount_type}, {"bSortable": false}]
+            "aoColumns": [
+                {"bSortable": false, "mRender": checkbox},
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {"bSortable": false}
+            ]
         });
     });
 </script>
 <?= form_open('system_settings/discount_actions', 'id="action-form"') ?>
 <div class="box">
     <div class="box-header">
-        <h2 class="blue"><i class="fa-fw fa fa-building"></i><?= $page_title ?></h2>
+        <h2 class="blue"><i class="fa-fw fa fa-money"></i><?= $page_title ?></h2>
 
         <div class="box-icon">
             <ul class="btn-tasks">
@@ -37,16 +40,14 @@
                                                                                   title="<?= lang("actions") ?>"></i></a>
                     <ul class="dropdown-menu pull-right" class="tasks-menus" role="menu" aria-labelledby="dLabel">
                         <li><a href="<?php echo site_url('system_settings/add_discount'); ?>" data-toggle="modal"
-                               data-target="#myModal"><i class="fa fa-plus"></i> <?= lang('add_discount') ?></a></li>
-
+                               data-target="#myModal"><i class="fa fa-plus"></i> <?= lang('Add_Discount') ?></a></li>
                         <li><a href="#" id="excel" data-action="export_excel"><i
                                     class="fa fa-file-excel-o"></i> <?= lang('export_to_excel') ?></a></li>
                         <li><a href="#" id="pdf" data-action="export_pdf"><i
                                     class="fa fa-file-pdf-o"></i> <?= lang('export_to_pdf') ?></a></li>
                         <li class="divider"></li>
                         <li><a href="#" id="delete" data-action="delete"><i
-                                    class="fa fa-trash-o"></i> <?= lang('delete_discounts') ?></a></li>
-
+                                    class="fa fa-trash-o"></i> <?= lang('Delete_Discounts') ?></a></li>
                     </ul>
                 </li>
             </ul>
@@ -65,9 +66,13 @@
                             <th style="min-width:30px; width: 30px; text-align: center;">
                                 <input class="checkbox checkth" type="checkbox" name="check"/>
                             </th>
-                            <th><?php echo $this->lang->line("name"); ?></th>
-                            <th><?php echo $this->lang->line("discount"); ?></th>
-                            <th><?php echo $this->lang->line("type"); ?></th>
+                            <th><?php echo $this->lang->line("Name"); ?></th>
+                            <th><?php echo $this->lang->line("Value"); ?></th>
+                            <th><?php echo $this->lang->line("Price_For_Value"); ?></th>
+                            <th><?php echo $this->lang->line("Start_Date"); ?></th>
+                            <th><?php echo $this->lang->line("End_Date"); ?></th>
+                            <th><?php echo $this->lang->line("Customer_Group"); ?></th>
+                            <th><?php echo $this->lang->line("Created"); ?></th>
                             <th style="width:65px;"><?php echo $this->lang->line("actions"); ?></th>
                         </tr>
                         </thead>

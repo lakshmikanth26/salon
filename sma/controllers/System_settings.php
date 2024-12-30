@@ -818,6 +818,206 @@ class system_settings extends MY_Controller
         }
     }
 
+    function discounts()
+    {
+
+        $this->data['error'] = validation_errors() ? validation_errors() : $this->session->flashdata('error');
+        $this->data['customer_groups'] = ["NON MEMBER", "MEMBER"];
+        $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => site_url('system_settings'), 'page' => lang('system_settings')), array('link' => '#', 'page' => lang('discounts')));
+        $meta = array('page_title' => lang('Discounts'), 'bc' => $bc);
+        $this->page_construct('settings/discounts', $meta, $this->data);
+    }
+
+    function getDiscounts()
+    {
+
+        $this->load->library('datatables');
+        $this->datatables
+            ->select("id, name, value, price_for_value, start_date, end_date,
+                    CASE 
+                        WHEN customer_group_id = 4 THEN 'MEMBER'
+                        ELSE 'NON MEMBER'
+                    END AS customer_group_name,
+                    created_on")
+            ->from("sma_discounts")
+            ->add_column("Actions", "<center>
+                <a href='" . site_url('system_settings/edit_discount/$1') . "' class='tip' title='" . lang("edit_discount") . "' data-toggle='modal' data-target='#myModal'>
+                    <i class=\"fa fa-edit\"></i>
+                </a> 
+                <a href='#' class='tip po' title='<b>" . lang("delete_discount") . "</b>' data-content=\"<p>" . lang('r_u_sure') . "</p>
+                    <a class='btn btn-danger po-delete' href='" . site_url('system_settings/delete_discount/$1') . "'>" . lang('i_m_sure') . "</a> 
+                    <button class='btn po-close'>" . lang('no') . "</button>\" rel='popover'>
+                    <i class=\"fa fa-trash-o\"></i>
+                </a>
+            </center>", "id");
+
+        echo $this->datatables->generate();
+    }
+
+    function add_discount() {
+        $this->form_validation->set_rules('name', lang("name"), 'trim|is_unique[discounts.name]|required');
+        $this->form_validation->set_rules('price_for_value', lang("price_for_value"), 'required|numeric');
+        $this->form_validation->set_rules('value', lang("value"), 'required|numeric');
+        $this->form_validation->set_rules('start_date', lang("start_date"), 'required|callback_validate_date');
+        $this->form_validation->set_rules('end_date', lang("end_date"), 'required|callback_validate_date');
+        $this->form_validation->set_rules('customer_group', lang("customer_group"), 'required');
+        if ($this->form_validation->run() == true) {
+            $data = array(
+                'name'        => $this->input->post('name'),
+                'price_for_value'       => $this->input->post('price_for_value'),
+                'value'       => $this->input->post('value'),
+                'start_date'       =>$this->reformat_date($this->input->post('start_date')),
+                'end_date'  => $this->reformat_date($this->input->post('end_date')),
+                'customer_group_id'  => $this->input->post('customer_group'),
+            );
+        } elseif ($this->input->post('add_discount')) {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect("system_settings/discounts");
+        }
+
+        if ($this->form_validation->run() == true && $this->settings_model->addDiscount($data)) {
+            $this->session->set_flashdata('message', lang("Discount_Added"));
+            redirect("system_settings/discounts");
+        } else {
+            $this->data['customer_groups'] = array(4 => "NON MEMBER", 5=>"MEMBER");
+            $this->data['error'] = (validation_errors() ? validation_errors() : $this->session->flashdata('error'));
+            $this->data['modal_js'] = $this->site->modal_js();
+            $this->data['page_title'] = lang("new_discount");
+            $this->load->view($this->theme . 'settings/add_discount', $this->data);
+        }
+    }
+
+    function edit_discount($id = NULL)
+    {
+        $discount = $this->settings_model->getDiscountByID($id);
+        $this->form_validation->set_rules('name', lang("name"), 'trim|required');
+        $this->form_validation->set_rules('price_for_value', lang("price_for_value"), 'required|numeric');
+        $this->form_validation->set_rules('value', lang("value"), 'required|numeric');
+        $this->form_validation->set_rules('start_date', lang("start_date"), 'required|callback_validate_date');
+        $this->form_validation->set_rules('end_date', lang("end_date"), 'required|callback_validate_date');
+        $this->form_validation->set_rules('customer_group', lang("customer_group"), 'required');
+        if ($this->form_validation->run() == true) {
+            $data = array(
+                'name'        => $this->input->post('name'),
+                'price_for_value'       => $this->input->post('price_for_value'),
+                'value'       => $this->input->post('value'),
+                'start_date'       =>$this->reformat_date($this->input->post('start_date')),
+                'end_date'  => $this->reformat_date($this->input->post('end_date')),
+                'customer_group_id'  => $this->input->post('customer_group'),
+            );
+        } elseif ($this->input->post('edit_discount')) {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect("system_settings/discounts");
+        }
+
+        if ($this->form_validation->run() == true && $this->settings_model->updateDiscount($id, $data)) { //check to see if we are updateing the customer
+            $this->session->set_flashdata('message', lang("discount_updated"));
+            redirect("system_settings/discounts");
+        } else {
+            $this->data['customer_groups'] = array(4 => "NON MEMBER", 5=>"MEMBER");
+            $this->data['error'] = (validation_errors() ? validation_errors() : $this->session->flashdata('error'));
+            $this->data['discount'] = $discount;
+            $this->data['id'] = $id;
+            $this->data['modal_js'] = $this->site->modal_js();
+            $this->load->view($this->theme . 'settings/edit_discount', $this->data);
+        }
+    }
+
+    function delete_discount($id = NULL)
+    {
+        if ($this->settings_model->deleteDiscount($id)) {
+            echo lang("Discount_Deleted");
+        }
+    }
+
+    function discount_actions()
+    {
+
+        $this->form_validation->set_rules('form_action', lang("form_action"), 'required');
+
+        if ($this->form_validation->run() == true) {
+
+            if (!empty($_POST['val'])) {
+                if ($this->input->post('form_action') == 'delete') {
+                    foreach ($_POST['val'] as $id) {
+                        $this->settings_model->deleteDiscount($id);
+                    }
+                    $this->session->set_flashdata('message', lang("Discount_deleted"));
+                    redirect($_SERVER["HTTP_REFERER"]);
+                }
+
+                if ($this->input->post('form_action') == 'export_excel' || $this->input->post('form_action') == 'export_pdf') {
+
+                    $this->load->library('excel');
+                    $this->excel->setActiveSheetIndex(0);
+                    $this->excel->getActiveSheet()->setTitle(lang('coupons'));
+                    $this->excel->getActiveSheet()->SetCellValue('A1', lang('name'));
+                    $this->excel->getActiveSheet()->SetCellValue('B1', lang('value'));
+                    $this->excel->getActiveSheet()->SetCellValue('C1', lang('price_for_value'));
+                    $this->excel->getActiveSheet()->SetCellValue('D1', lang('customer_group'));
+                    $this->excel->getActiveSheet()->SetCellValue('E1', lang('start_date'));
+                    $this->excel->getActiveSheet()->SetCellValue('F1', lang('end_date'));
+                    $this->excel->getActiveSheet()->SetCellValue('G1', lang('Created'));
+
+
+                    $row = 2;
+                    foreach ($_POST['val'] as $id) {
+                        $sc = $this->settings_model->getDiscountByID($id);
+                        $this->excel->getActiveSheet()->SetCellValue('A' . $row, $sc->name);
+                        $this->excel->getActiveSheet()->SetCellValue('B' . $row, $sc->value);
+                        $this->excel->getActiveSheet()->SetCellValue('C' . $row, $sc->price_for_value);
+                        $this->excel->getActiveSheet()->SetCellValue('D' . $row, $sc->customer_group_id);
+                        $this->excel->getActiveSheet()->SetCellValue('E' . $row, $sc->start_date);
+                        $this->excel->getActiveSheet()->SetCellValue('F' . $row, $sc->end_date);
+                        $this->excel->getActiveSheet()->SetCellValue('G' . $row, $sc->created_on);
+                        $row++;
+                    }
+
+                    $this->excel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
+                    $this->excel->getDefaultStyle()->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+                    $filename = 'discount_' . date('Y_m_d_H_i_s');
+                    if ($this->input->post('form_action') == 'export_pdf') {
+                        $styleArray = array('borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN)));
+                        $this->excel->getDefaultStyle()->applyFromArray($styleArray);
+                        $this->excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+                        require_once(APPPATH . "third_party" . DIRECTORY_SEPARATOR . "MPDF" . DIRECTORY_SEPARATOR . "mpdf.php");
+                        $rendererName = PHPExcel_Settings::PDF_RENDERER_MPDF;
+                        $rendererLibrary = 'MPDF';
+                        $rendererLibraryPath = APPPATH . 'third_party' . DIRECTORY_SEPARATOR . $rendererLibrary;
+                        if (!PHPExcel_Settings::setPdfRenderer($rendererName, $rendererLibraryPath)) {
+                            die('Please set the $rendererName: ' . $rendererName . ' and $rendererLibraryPath: ' . $rendererLibraryPath . ' values' .
+                                PHP_EOL . ' as appropriate for your directory structure');
+                        }
+
+                        header('Content-Type: application/pdf');
+                        header('Content-Disposition: attachment;filename="' . $filename . '.pdf"');
+                        header('Cache-Control: max-age=0');
+
+                        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'PDF');
+                        return $objWriter->save('php://output');
+                    }
+                    if ($this->input->post('form_action') == 'export_excel') {
+                        header('Content-Type: application/vnd.ms-excel');
+                        header('Content-Disposition: attachment;filename="' . $filename . '.xls"');
+                        header('Cache-Control: max-age=0');
+
+                        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+                        return $objWriter->save('php://output');
+                    }
+
+                    redirect($_SERVER["HTTP_REFERER"]);
+                }
+            } else {
+                $this->session->set_flashdata('error', lang("No_Discounts_Selected"));
+                redirect($_SERVER["HTTP_REFERER"]);
+            }
+        } else {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect($_SERVER["HTTP_REFERER"]);
+        }
+    }
+    
+
     function coupons()
     {
 
@@ -840,29 +1040,6 @@ class system_settings extends MY_Controller
 
         echo $this->datatables->generate();
     }
-
-    function currencies()
-    {
-
-        $this->data['error'] = validation_errors() ? validation_errors() : $this->session->flashdata('error');
-
-        $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => site_url('system_settings'), 'page' => lang('system_settings')), array('link' => '#', 'page' => lang('currencies')));
-        $meta = array('page_title' => lang('currencies'), 'bc' => $bc);
-        $this->page_construct('settings/currencies', $meta, $this->data);
-    }
-
-    function getCurrencies()
-    {
-
-        $this->load->library('datatables');
-        $this->datatables
-            ->select("id, code, name, rate")
-            ->from("currencies")
-            ->add_column("Actions", "<center><a href='" . site_url('system_settings/edit_currency/$1') . "' class='tip' title='" . lang("edit_currency") . "' data-toggle='modal' data-target='#myModal'><i class=\"fa fa-edit\"></i></a> <a href='#' class='tip po' title='<b>" . lang("delete_currency") . "</b>' data-content=\"<p>" . lang('r_u_sure') . "</p><a class='btn btn-danger po-delete' href='" . site_url('system_settings/delete_currency/$1') . "'>" . lang('i_m_sure') . "</a> <button class='btn po-close'>" . lang('no') . "</button>\"  rel='popover'><i class=\"fa fa-trash-o\"></i></a></center>", "id");
-        //->unset_column('id');
-
-        echo $this->datatables->generate();
-    }  
 
     function coupon_actions()
     {
@@ -1070,6 +1247,29 @@ class system_settings extends MY_Controller
 
         return $formattedDate ? $formattedDate->format('Y-m-d') : null;
     }
+
+    function currencies()
+    {
+
+        $this->data['error'] = validation_errors() ? validation_errors() : $this->session->flashdata('error');
+
+        $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => site_url('system_settings'), 'page' => lang('system_settings')), array('link' => '#', 'page' => lang('currencies')));
+        $meta = array('page_title' => lang('currencies'), 'bc' => $bc);
+        $this->page_construct('settings/currencies', $meta, $this->data);
+    }
+
+    function getCurrencies()
+    {
+
+        $this->load->library('datatables');
+        $this->datatables
+            ->select("id, code, name, rate")
+            ->from("currencies")
+            ->add_column("Actions", "<center><a href='" . site_url('system_settings/edit_currency/$1') . "' class='tip' title='" . lang("edit_currency") . "' data-toggle='modal' data-target='#myModal'><i class=\"fa fa-edit\"></i></a> <a href='#' class='tip po' title='<b>" . lang("delete_currency") . "</b>' data-content=\"<p>" . lang('r_u_sure') . "</p><a class='btn btn-danger po-delete' href='" . site_url('system_settings/delete_currency/$1') . "'>" . lang('i_m_sure') . "</a> <button class='btn po-close'>" . lang('no') . "</button>\"  rel='popover'><i class=\"fa fa-trash-o\"></i></a></center>", "id");
+        //->unset_column('id');
+
+        echo $this->datatables->generate();
+    }  
 
     function add_currency()
     {

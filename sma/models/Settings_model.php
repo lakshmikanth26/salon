@@ -308,6 +308,33 @@ class Settings_model extends CI_Model
         return false;
     }
 
+    public function addDiscount($data)
+    {
+        echo $data;
+        if ($this->db->insert("discounts", $data)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getDiscountByID($id)
+    {
+        $q = $this->db->get_where('discounts', array('id' => $id), 1);
+        if ($q->num_rows() > 0) {
+            return $q->row();
+        }
+        return FALSE;
+    }
+
+    public function updateDiscount($id, $data = array())
+    {
+        $this->db->where('id', $id);
+        if ($this->db->update("discounts", $data)) {
+            return true;
+        }
+        return false;
+    }
+
     public function getCouponByID($id)
     {
         $q = $this->db->get_where('coupons', array('id' => $id), 1);
@@ -338,6 +365,14 @@ class Settings_model extends CI_Model
     public function deleteCoupon($id)
     {
         if ($this->db->delete("coupons", array('id' => $id))) {
+            return true;
+        }
+        return FALSE;
+    }
+
+    public function deleteDiscount($id)
+    {
+        if ($this->db->delete("discounts", array('id' => $id))) {
             return true;
         }
         return FALSE;
